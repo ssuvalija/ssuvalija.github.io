@@ -32,9 +32,13 @@ jobs:
           filesArray=($SCRIPT_FILES)
 
           for file in $filesArray; do
-            echo "$file" 
-            export content=$(cat $file)
-            echo "$content"
-            echo "------" 
+            if [[ $string == *"browser_monitor_scripts"* ]]; then
+              echo "------" 
+              content=$(cat $file)
+              echo "$content"
+            fi
+
           done
+
+
       
