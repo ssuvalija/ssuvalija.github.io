@@ -32,7 +32,7 @@ jobs:
           filesArray=($SCRIPT_FILES)
 
           for file in $filesArray; do
-            if [[ $string == *"browser_monitor_scripts"* ]]; then
+            if [[ $file == *"browser_monitor_scripts"* ]]; then
               echo "------" 
               content=$(cat $file)
               echo "$content"

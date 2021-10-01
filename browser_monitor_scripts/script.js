@@ -1,5 +1,5 @@
 async function testPage(page) {
-      //update script testttt
+      //update script testtttt
       // visit the home page
       await page.goto('https://www.apple.com/');
       // take screenshot of the home page
