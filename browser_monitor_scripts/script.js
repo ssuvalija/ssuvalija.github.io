@@ -1,3 +1,1 @@
-async function testPage(page)
-module.exports = testPage;
-
+here goes the script
