@@ -4,6 +4,7 @@ async function testPage(page) {
       await page.goto('https://www.github.com/');
       
       // take screenshot of the home page
+      
       await page.screenshot({ path: 'screenshot.jpg' });
     }
     
