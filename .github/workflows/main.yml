@@ -32,7 +32,7 @@ jobs:
           filesArray=($SCRIPT_FILES)
 
           for file in $filesArray; do
-            echo "sending api request========"
+            echo "sending api request========="
             echo "$file"
             if [[ $file == *"browser_monitor_scripts"* ]]; then
               echo "------" 
