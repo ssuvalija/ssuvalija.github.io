@@ -1,10 +1,1 @@
-async function testPage(page) {
-      //update script test
-      // visit the home pagee
-      await page.goto('https://www.github.com/');
-      
-      // take screenshot of the home page
-      await page.screenshot({ path: 'screenshot.jpg' });
-    }
-    
-module.exports = testPage;
+async function testPage(page) {\r\n      \/\/ visit the home page\r\n      await page.goto('https:\/\/www.apple.comm\/');\r\n      \r\n      \/\/ take screenshot of the home page\r\n      await page.screenshot({ path: 'screenshot.jpg' });\r\n    }\r\n    \r\nmodule.exports = testPage;
