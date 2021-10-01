@@ -25,6 +25,6 @@ jobs:
         run: |
           for file in "${{ steps.changed-files.outputs.all_modified_files }}"; do
             echo "$file was modified"
-            export SCRIPT_FILES=$SCRIPT_FILES + ',' + $file
+            export SCRIPT_FILES="${SCRIPT_FILES} $file"
             echo $SCRIPT_FILES  
           done
