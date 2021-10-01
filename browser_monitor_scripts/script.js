@@ -1,6 +1,3 @@
-async function testPage(page) {
-  await page.goto('https://www.apple.comm/');
-  await page.screenshot({ path: 'screenshot.jpg' });
-}
+async function testPage(page)
 module.exports = testPage;
 
