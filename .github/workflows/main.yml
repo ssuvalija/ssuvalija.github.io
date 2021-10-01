@@ -28,3 +28,10 @@ jobs:
             export SCRIPT_FILES="$file"
             echo $SCRIPT_FILES  
           done
+
+          filesArray=($SCRIPT_FILES)
+
+          for file in $filesArray; do
+            echo "$file" 
+          done
+      
