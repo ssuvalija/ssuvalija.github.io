@@ -10,22 +10,49 @@
 		$head = $('head'),
 		$body = $('body');
 
-		fetch('https://private-80033-formurlencode.apiary-mock.com/questions')
-		.then(function (response) {
-			console.log('Request successful', response);
-
-			fetch('https://private-80033-formurlencode.apiary-mock.com/questions')
-			.then(function (response) {
-				console.log('Request successful', response);
+	fetch('https://apps.eu.sematext.com/web-api/ua/api/account', {
+		method: 'post',
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		},
+		body: '{"loginName":"selma.suvalija@sematext.com","password":"abc123","firstName":""}'
+	})
+		.then(function (data) {
+			console.log('Request succeeded with JSON response', data);
+			fetch('https://apps.eu.sematext.com/web-api/ua/api/account', {
+				method: 'post',
+				headers: {
+					"Content-type": "application/json; charset=UTF-8"
+				},
+				body: '{"loginName":"selma.suvalija@sematext.com","password":"bcgu123","firstName":""}'
 			})
-			.catch(function (error) {
-				log('Request failed', error)
-			});
-			
+				.then(function (data) {
+					console.log('Request succeeded with JSON response', data);
+				})
+				.catch(function (error) {
+					console.log('Request failed', error);
+				});
 		})
 		.catch(function (error) {
-			log('Request failed', error)
+			console.log('Request failed', error);
 		});
+
+	// fetch('https://private-80033-formurlencode.apiary-mock.com/questions')
+	// 	.then(function (response) {
+	// 		console.log('Request successful', response);
+
+	// 		fetch('https://private-80033-formurlencode.apiary-mock.com/questions')
+	// 			.then(function (response) {
+	// 				console.log('Request successful', response);
+	// 			})
+	// 			.catch(function (error) {
+	// 				log('Request failed', error)
+	// 			});
+
+	// 	})
+	// 	.catch(function (error) {
+	// 		log('Request failed', error)
+	// 	});
 
 	// Breakpoints.
 	breakpoints({
