@@ -10,6 +10,35 @@
 		$head = $('head'),
 		$body = $('body');
 
+		fetch( {
+		url: 'https://private-80033-formurlencode.apiary-mock.com/questions',
+		method: 'post',
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		},
+		body: '{"question": "Favourite programming language?", "choices": ["Swift","Python","Objective-C"]}'
+	})
+		.then(function (data) {
+			console.log('Request succeeded with JSON response', data);
+			fetch({
+				url: 'https://private-80033-formurlencode.apiary-mock.com/questions',
+				method: 'post',
+				headers: {
+					"Content-type": "application/json; charset=UTF-8"
+				},
+				body: '{"question": "Favourite programming language?", "choices": ["Swift","Python","Objective-C"]}'
+			})
+				.then(function (data) {
+					console.log('Request succeeded with JSON response', data);
+				})
+				.catch(function (error) {
+					console.log('Request failed', error);
+				});
+		})
+		.catch(function (error) {
+			console.log('Request failed', error);
+		});
+
 	fetch('https://private-80033-formurlencode.apiary-mock.com/questions', {
 		method: 'post',
 		headers: {
