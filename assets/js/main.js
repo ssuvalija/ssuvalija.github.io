@@ -10,23 +10,21 @@
 		$head = $('head'),
 		$body = $('body');
 
-	fetch('https://apps.eu.sematext.com/web-api/ua/api/account', {
+	fetch('https://private-80033-formurlencode.apiary-mock.com/questions', {
 		method: 'post',
-		mode: 'cors',
 		headers: {
 			"Content-type": "application/json; charset=UTF-8"
 		},
-		body: '{"loginName":"selma.suvalija@sematext.com","password":"abc123","firstName":""}'
+		body: '"question": "Favourite programming language?", "choices": ["Swift","Python","Objective-C"]}'
 	})
 		.then(function (data) {
 			console.log('Request succeeded with JSON response', data);
-			fetch('https://apps.eu.sematext.com/web-api/ua/api/account', {
+			fetch('https://private-80033-formurlencode.apiary-mock.com/questions', {
 				method: 'post',
-				mode: 'cors',
 				headers: {
 					"Content-type": "application/json; charset=UTF-8"
 				},
-				body: '{"loginName":"selma.suvalija@sematext.com","password":"bcgu123","firstName":""}'
+				body: '"question": "Favourite programming language?", "choices": ["Swift","Python","Objective-C"]}'
 			})
 				.then(function (data) {
 					console.log('Request succeeded with JSON response', data);
