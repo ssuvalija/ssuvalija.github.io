@@ -23,13 +23,7 @@
 
 
 
-	fetch('https://private-80033-formurlencode.apiary-mock.com/questions', {
-		method: 'post',
-		headers: {
-			"Content-type": "application/json; charset=UTF-8"
-		},
-		body: '{"question": "Favourite programming language?", "choices": ["Swift","Python","Objective-C"]}'
-	})
+	fetch(request)
 		.then(function (data) {
 			console.log('Request 1succeeded with JSON response', data);
 			fetch(request)
