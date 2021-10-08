@@ -37,22 +37,22 @@
 			console.log('Request failed', error);
 		});
 
-	// fetch('https://private-80033-formurlencode.apiary-mock.com/questions')
-	// 	.then(function (response) {
-	// 		console.log('Request successful', response);
+	fetch('https://private-80033-formurlencode.apiary-mock.com/questions')
+		.then(function (response) {
+			console.log('Request successful', response);
 
-	// 		fetch('https://private-80033-formurlencode.apiary-mock.com/questions')
-	// 			.then(function (response) {
-	// 				console.log('Request successful', response);
-	// 			})
-	// 			.catch(function (error) {
-	// 				log('Request failed', error)
-	// 			});
+			fetch('https://private-80033-formurlencode.apiary-mock.com/questions')
+				.then(function (response) {
+					console.log('Request successful', response);
+				})
+				.catch(function (error) {
+					log('Request failed', error)
+				});
 
-	// 	})
-	// 	.catch(function (error) {
-	// 		log('Request failed', error)
-	// 	});
+		})
+		.catch(function (error) {
+			log('Request failed', error)
+		});
 
 	// Breakpoints.
 	breakpoints({
