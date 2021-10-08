@@ -20,13 +20,14 @@
 
 		let request = new Request('https://private-80033-formurlencode.apiary-mock.com/questions', data);
 
+		let request2 = new Request('https://private-80033-formurlencode.apiary-mock.com/questions', data);
 
 
 
 	fetch(request)
 		.then(function (data) {
 			console.log('Request 1succeeded with JSON response', data);
-			fetch(request)
+			fetch(request2)
 				.then(function (data) {
 					console.log('Request 2 succeeded with JSON response', data);
 				})
