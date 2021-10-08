@@ -22,6 +22,7 @@
 			console.log('Request succeeded with JSON response', data);
 			fetch('https://apps.eu.sematext.com/web-api/ua/api/account', {
 				method: 'post',
+				mode: 'cors',
 				headers: {
 					"Content-type": "application/json; charset=UTF-8"
 				},
