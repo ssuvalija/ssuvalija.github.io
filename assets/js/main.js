@@ -15,7 +15,7 @@
 		headers: {
 			"Content-type": "application/json; charset=UTF-8"
 		},
-		body: '"question": "Favourite programming language?", "choices": ["Swift","Python","Objective-C"]}'
+		body: '{"question": "Favourite programming language?", "choices": ["Swift","Python","Objective-C"]}'
 	})
 		.then(function (data) {
 			console.log('Request succeeded with JSON response', data);
@@ -24,7 +24,7 @@
 				headers: {
 					"Content-type": "application/json; charset=UTF-8"
 				},
-				body: '"question": "Favourite programming language?", "choices": ["Swift","Python","Objective-C"]}'
+				body: '{"question": "Favourite programming language?", "choices": ["Swift","Python","Objective-C"]}'
 			})
 				.then(function (data) {
 					console.log('Request succeeded with JSON response', data);
