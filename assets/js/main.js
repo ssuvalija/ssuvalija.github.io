@@ -10,6 +10,14 @@
 		$head = $('head'),
 		$body = $('body');
 
+		fetch('https://private-80033-formurlencode.apiary-mock.com/questions')
+		.then(function (response) {
+			console.log('Request successful', response);
+		})
+		.catch(function (error) {
+			log('Request failed', error)
+		});
+
 	// Breakpoints.
 	breakpoints({
 		xlarge: ['1281px', '1680px'],
@@ -29,14 +37,6 @@
 		window.setTimeout(function () {
 			$body.removeClass('is-preload');
 		}, 100);
-
-		fetch('ttps://private-80033-formurlencode.apiary-mock.com/questions')
-			.then(function (response) {
-				console.log('Request successful', response);
-			})
-			.catch(function (error) {
-				log('Request failed', error)
-			});
 	});
 
 	// ... stopped resizing.
