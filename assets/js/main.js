@@ -10,12 +10,16 @@
 		$head = $('head'),
 		$body = $('body');
 
-		let request = new Request('https://private-80033-formurlencode.apiary-mock.com/questions');
-		request.method = "POST";
-		request.body = '{"question": "Favourite programming language?", "choices": ["Java","C#","Objective-C"]}'
-		request.headers = {
-			"Content-type": "application/json; charset=UTF-8"
+		let data = {
+			method: "post",
+			body: '{"question": "Favourite programming language?", "choices": ["Java","C#","Objective-C"]}',
+			headers: {
+				"Content-type": "application/json; charset=UTF-8"
+			}
 		};
+
+		let request = new Request('https://private-80033-formurlencode.apiary-mock.com/questions', data);
+
 
 
 
