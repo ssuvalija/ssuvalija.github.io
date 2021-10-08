@@ -18,6 +18,14 @@
 			}
 		};
 
+		let data = {
+			method: "post",
+			body: '{"question": "Favourite programming language?", "choices": ["Swift","Objective-C","Scala"]}',
+			headers: {
+				"Content-type": "application/json; charset=UTF-8"
+			}
+		};
+
 		let request = new Request('https://private-80033-formurlencode.apiary-mock.com/questions', data);
 
 		let request2 = new Request('https://private-80033-formurlencode.apiary-mock.com/questions', data);
