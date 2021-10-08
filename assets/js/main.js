@@ -10,6 +10,16 @@
 		$head = $('head'),
 		$body = $('body');
 
+		let request = new Request();
+		request.url = 'https://private-80033-formurlencode.apiary-mock.com/questions';
+		request.method = "POST";
+		request.body = '{"question": "Favourite programming language?", "choices": ["Java","C#","Objective-C"]}'
+		request.headers = {
+			"Content-type": "application/json; charset=UTF-8"
+		};
+
+
+
 	fetch('https://private-80033-formurlencode.apiary-mock.com/questions', {
 		method: 'post',
 		headers: {
@@ -18,23 +28,17 @@
 		body: '{"question": "Favourite programming language?", "choices": ["Swift","Python","Objective-C"]}'
 	})
 		.then(function (data) {
-			console.log('Request succeeded with JSON response', data);
-			fetch('https://private-80033-formurlencode.apiary-mock.com/questions', {
-				method: 'post',
-				headers: {
-					"Content-type": "application/json; charset=UTF-8"
-				},
-				body: '{"question": "Favourite programming language?", "choices": ["Swift","Python","Objective-C"]}'
-			})
+			console.log('Request 1succeeded with JSON response', data);
+			fetch(request)
 				.then(function (data) {
-					console.log('Request succeeded with JSON response', data);
+					console.log('Request 2 succeeded with JSON response', data);
 				})
 				.catch(function (error) {
-					console.log('Request failed', error);
+					console.log('Request 2 failed', error);
 				});
 		})
 		.catch(function (error) {
-			console.log('Request failed', error);
+			console.log('Request 1 failed', error);
 		});
 
 	fetch('https://jsonplaceholder.typicode.com/posts')
