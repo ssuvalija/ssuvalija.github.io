@@ -56,12 +56,12 @@
 					console.log('Request successful', response);
 				})
 				.catch(function (error) {
-					log('Request failed', error)
+					console.log('Request failed', error)
 				});
 
 		})
 		.catch(function (error) {
-			log('Request failed', error)
+			console.log('Request failed', error)
 		});
 
 
@@ -74,12 +74,12 @@
 					console.log('Request successful', response);
 				})
 				.catch(function (error) {
-					log('Request failed', error)
+					console.log('Request failed', error)
 				});
 
 		})
 		.catch(function (error) {
-			log('Request failed', error)
+			console.log('Request failed', error)
 		});
 
 	// Breakpoints.
