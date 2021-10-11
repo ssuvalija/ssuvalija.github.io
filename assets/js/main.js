@@ -64,6 +64,24 @@
 			log('Request failed', error)
 		});
 
+
+		fetch('https://jsonplaceholder.typicode.com/posts', {method: 'HEAD'})
+		.then(function (response) {
+			console.log('Request successful', response);
+
+			fetch('https://jsonplaceholder.typicode.com/posts', { method: 'HEAD'})
+				.then(function (response) {
+					console.log('Request successful', response);
+				})
+				.catch(function (error) {
+					log('Request failed', error)
+				});
+
+		})
+		.catch(function (error) {
+			log('Request failed', error)
+		});
+
 	// Breakpoints.
 	breakpoints({
 		xlarge: ['1281px', '1680px'],
