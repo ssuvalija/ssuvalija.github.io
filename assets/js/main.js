@@ -75,7 +75,13 @@
 			console.log('Request 1 failed', error);
 		});
 
-	fetch(request3)
+	fetch('https://private-80033-formurlencode.apiary-mock.com/questions', {
+		method: "post",
+		body: '{"question": "Favourite programming language?", "choices": ["Ruby","Python","javaScript"]}',
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		}
+	})
 		.then(function (data) {
 			console.log('Request 3 succeeded with JSON response', data);
 		})
