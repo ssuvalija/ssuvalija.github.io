@@ -31,22 +31,6 @@
 		let request2 = new Request('https://private-80033-formurlencode.apiary-mock.com/questions', data2);
 
 
-
-	fetch(request)
-		.then(function (data) {
-			console.log('Request 1succeeded with JSON response', data);
-			fetch(request2)
-				.then(function (data) {
-					console.log('Request 2 succeeded with JSON response', data);
-				})
-				.catch(function (error) {
-					console.log('Request 2 failed', error);
-				});
-		})
-		.catch(function (error) {
-			console.log('Request 1 failed', error);
-		});
-
 	fetch('https://jsonplaceholder.typicode.com/posts')
 		.then(function (response) {
 			console.log('Request successful', response);
@@ -62,6 +46,21 @@
 		})
 		.catch(function (error) {
 			console.log('Request failed', error)
+		});
+
+		fetch(request)
+		.then(function (data) {
+			console.log('Request 1succeeded with JSON response', data);
+			fetch(request2)
+				.then(function (data) {
+					console.log('Request 2 succeeded with JSON response', data);
+				})
+				.catch(function (error) {
+					console.log('Request 2 failed', error);
+				});
+		})
+		.catch(function (error) {
+			console.log('Request 1 failed', error);
 		});
 
 
