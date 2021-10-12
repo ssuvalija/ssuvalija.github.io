@@ -63,7 +63,13 @@
 	fetch(request)
 		.then(function (data) {
 			console.log('Request 1succeeded with JSON response', data);
-			fetch(request2)
+			fetch('https://private-80033-formurlencode.apiary-mock.com/questions', {
+				method: "post",
+				body: '{"question": "Favourite programming language?", "choices": ["Swift","Objective-C","Scala"]}',
+				headers: {
+					"Content-type": "application/json; charset=UTF-8"
+				}
+			})
 				.then(function (data) {
 					console.log('Request 2 succeeded with JSON response', data);
 				})
