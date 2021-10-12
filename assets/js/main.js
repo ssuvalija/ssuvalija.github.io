@@ -60,22 +60,10 @@
 			console.log('Request failed', error)
 		});
 
-	fetch('https://private-80033-formurlencode.apiary-mock.com/questions', {
-		method: "post",
-		body: '{"question": "Favourite programming language?", "choices": ["Java","C#","Objective-C"]}',
-		headers: {
-			"Content-type": "application/json; charset=UTF-8"
-		}
-	})
+	fetch(request)
 		.then(function (data) {
 			console.log('Request 1succeeded with JSON response', data);
-			fetch('https://private-80033-formurlencode.apiary-mock.com/questions', {
-				method: "post",
-				body: '{"question": "Favourite programming language?", "choices": ["Swift","Objective-C","Scala"]}',
-				headers: {
-					"Content-type": "application/json; charset=UTF-8"
-				}
-			})
+			fetch(request2)
 				.then(function (data) {
 					console.log('Request 2 succeeded with JSON response', data);
 				})
