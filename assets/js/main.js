@@ -26,9 +26,21 @@
 			}
 		};
 
+		let data3 = {
+			method: "post",
+			body: '{"question": "Favourite programming language?", "choices": ["Ruby","Python","javaScript"]}',
+			headers: {
+				"Content-type": "application/json; charset=UTF-8"
+			}
+		};
+
 		let request = new Request('https://private-80033-formurlencode.apiary-mock.com/questions', data);
 
 		let request2 = new Request('https://private-80033-formurlencode.apiary-mock.com/questions', data2);
+
+
+		let request3 = new Request('https://private-80033-formurlencode.apiary-mock.com/questions', data3);
+
 
 
 	fetch('https://jsonplaceholder.typicode.com/posts')
@@ -61,6 +73,14 @@
 		})
 		.catch(function (error) {
 			console.log('Request 1 failed', error);
+		});
+
+		fetch(request3)
+		.then(function (data) {
+			console.log('Request 3 succeeded with JSON response', data);
+		})
+		.catch(function (error) {
+			console.log('Request 3 failed', error);
 		});
 
 
