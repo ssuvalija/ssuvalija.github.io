@@ -10,36 +10,36 @@
 		$head = $('head'),
 		$body = $('body');
 
-		let data = {
-			method: "post",
-			body: '{"question": "Favourite programming language?", "choices": ["Java","C#","Objective-C"]}',
-			headers: {
-				"Content-type": "application/json; charset=UTF-8"
-			}
-		};
+	let data = {
+		method: "post",
+		body: '{"question": "Favourite programming language?", "choices": ["Java","C#","Objective-C"]}',
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		}
+	};
 
-		let data2 = {
-			method: "post",
-			body: '{"question": "Favourite programming language?", "choices": ["Swift","Objective-C","Scala"]}',
-			headers: {
-				"Content-type": "application/json; charset=UTF-8"
-			}
-		};
+	let data2 = {
+		method: "post",
+		body: '{"question": "Favourite programming language?", "choices": ["Swift","Objective-C","Scala"]}',
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		}
+	};
 
-		let data3 = {
-			method: "post",
-			body: '{"question": "Favourite programming language?", "choices": ["Ruby","Python","javaScript"]}',
-			headers: {
-				"Content-type": "application/json; charset=UTF-8"
-			}
-		};
+	let data3 = {
+		method: "post",
+		body: '{"question": "Favourite programming language?", "choices": ["Ruby","Python","javaScript"]}',
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		}
+	};
 
-		let request = new Request('https://private-80033-formurlencode.apiary-mock.com/questions', data);
+	let request = new Request('https://private-80033-formurlencode.apiary-mock.com/questions', data);
 
-		let request2 = new Request('https://private-80033-formurlencode.apiary-mock.com/questions', data2);
+	let request2 = new Request('https://private-80033-formurlencode.apiary-mock.com/questions', data2);
 
 
-		let request3 = new Request('https://private-80033-formurlencode.apiary-mock.com/questions', data3);
+	let request3 = new Request('https://private-80033-formurlencode.apiary-mock.com/questions', data3);
 
 
 
@@ -60,18 +60,22 @@
 			console.log('Request failed', error)
 		});
 
-		fetch('https://private-80033-formurlencode.apiary-mock.com/questions', {method: "post",
+	fetch('https://private-80033-formurlencode.apiary-mock.com/questions', {
+		method: "post",
 		body: '{"question": "Favourite programming language?", "choices": ["Java","C#","Objective-C"]}',
 		headers: {
 			"Content-type": "application/json; charset=UTF-8"
-		}})
+		}
+	})
 		.then(function (data) {
 			console.log('Request 1succeeded with JSON response', data);
-			fetch('https://private-80033-formurlencode.apiary-mock.com/questions', {method: "post",
-			body: '{"question": "Favourite programming language?", "choices": ["Swift","Objective-C","Scala"]}',
-			headers: {
-				"Content-type": "application/json; charset=UTF-8"
-			}})
+			fetch('https://private-80033-formurlencode.apiary-mock.com/questions', {
+				method: "post",
+				body: '{"question": "Favourite programming language?", "choices": ["Swift","Objective-C","Scala"]}',
+				headers: {
+					"Content-type": "application/json; charset=UTF-8"
+				}
+			})
 				.then(function (data) {
 					console.log('Request 2 succeeded with JSON response', data);
 				})
@@ -83,7 +87,7 @@
 			console.log('Request 1 failed', error);
 		});
 
-		fetch(request3)
+	fetch(request3)
 		.then(function (data) {
 			console.log('Request 3 succeeded with JSON response', data);
 		})
@@ -92,11 +96,11 @@
 		});
 
 
-		fetch('https://jsonplaceholder.typicode.com/posts', {method: 'HEAD'})
+	fetch('https://jsonplaceholder.typicode.com/posts', { method: 'HEAD' })
 		.then(function (response) {
 			console.log('Request successful', response);
 
-			fetch('https://jsonplaceholder.typicode.com/posts', { method: 'HEAD'})
+			fetch('https://jsonplaceholder.typicode.com/posts', { method: 'HEAD' })
 				.then(function (response) {
 					console.log('Request successful', response);
 				})
