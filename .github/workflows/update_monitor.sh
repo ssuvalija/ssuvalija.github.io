@@ -2,6 +2,16 @@
 
 file='test-script.js'
 
+line=$( head -n 1 $file )
+IFS='=' read -r -a monitor_ids <<< "$line"
+
+echo 'monitor ids========'
+echo ${monitor_ids[1]}
+
+IFS='=' read -r -a monitors <<< "$monitor_ids"
+echo 'monitors splitted========'
+echo $monitors[0]
+
 script_content=$( base64 $file)
 
 api_url='https://apps.test.sematext.com'
