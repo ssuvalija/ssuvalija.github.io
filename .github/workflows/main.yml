@@ -43,6 +43,10 @@ jobs:
               api_url=${{ secrets.SC_API_BASE_URL }}
               api_url+='/apps/3981/monitors/browser/1153'
 
+              copy=api_url
+              echo "see copy========"
+              echo $copy
+
               echo "api url========"
               echo $api_url
 
