@@ -27,8 +27,6 @@ jobs:
             echo "$file was modified"
             export SCRIPT_FILES="$file"
             echo $SCRIPT_FILES
-            test=$(jo "script"="my special "string"")
-            echo $test
           done
 
           filesArray=($SCRIPT_FILES)
