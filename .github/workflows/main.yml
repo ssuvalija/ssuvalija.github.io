@@ -45,12 +45,12 @@ jobs:
               line=$( head -n 1 $file )
               IFS='=' read -r -a monitor_ids <<< "$line"
 
-              echo 'monitor ids========'$monitor_ids[1]
+              echo 'monitor ids========'${monitor_ids[1]}
 
-              IFS='=' read -r -a monitors <<< "$monitor_ids[1]"
-              echo 'monitors splitted========'$monitors[0]
+              IFS='=' read -r -a monitors <<< "${monitor_ids[1]}"
+              echo 'monitors splitted========'{$monitors[0]}
 
-              for monitor_id in $monitors; do
+              for monitor_id in "${monitors[@]}"; do
                 api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/3981/monitors/browser/'${monitor_id}
                 curl -v --location --request PUT ${api_url} \
                   --header 'authorization: apiKey '${SC_API_KEY} \
