@@ -35,12 +35,18 @@ jobs:
             echo "sending api request========="
             echo "------------------------------"
             if [[ $file == *"browser_monitor_scripts"* ]]; then
-              content="`cat $file`"
-              echo '{"name":"browser demo monitor 6","interval":"10m","enabled":true,"locations":[1,8],"script": "'$content'","url":"https://","scriptBased":true,"conditions":[{"id":4178,"type":"ERROR","operator":"=","value":"","enabled":true},{"id":4179,"type":"METRIC","key":"synthetics.time.response","operator":"<","value":"20000","enabled":true}],"alertRule":{"schedule":[{"day":"MONDAY","index":2,"label":"MON","intervals":[],"type":"ACTIVE"},{"day":"TUESDAY","index":3,"label":"TUE","intervals":[],"type":"ACTIVE"},{"day":"WEDNESDAY","index":4,"label":"WED","intervals":[],"type":"ACTIVE"},{"day":"THURSDAY","index":5,"label":"THU","intervals":[],"type":"ACTIVE"},{"day":"FRIDAY","index":6,"label":"FRI","intervals":[],"type":"ACTIVE"},{"day":"SATURDAY","index":7,"label":"SAT","intervals":[],"type":"ACTIVE"},{"day":"SUNDAY","index":1,"label":"SUN","intervals":[],"type":"ACTIVE"}],"minDelayBetweenNotificationsInMinutes":"10","backToNormalNeeded":true,"failedRunCountToAlert":1,"notificationsEnabled":true,"useOnlyAlertRuleIntegrations":false}}'
-              echo "------------------------------"
-              curl --location --request PUT 'https://apps.sematext.com/synthetics-api/api/apps/43858/monitors/browser/1573' \
-              --header 'cookie: strumuser=f3d683af-d71d-489a-a36e-384cce167c7b; _ga=GA1.2.1372544977.1632816737; _gid=GA1.2.782188282.1632816737; _hjid=baeb8f76-bd84-43e7-8249-4d0354d085ee; hubspotutk=d6177d9cff3f8c47d25bd420b1ef8797; __hssrc=1; __hs_opt_out=no; __hs_initial_opt_in=true; _gcl_au=1.1.1477536502.1632817983; sematext_sua_auth_v3_test_eu=5d3116db715714aed9e20ab7ac18dcc0; sematext_sua_marker_v3_test_eu=true; smtuc=88ccaca8-516b-e83e-2514-ff080c0e7c95|src:smw_._clts:1632996758252_._u:https://sematext.com/pricing/_._cr:https://sematext.com/pricing/_._r:https://sematext.com/|; __insp_wid=2042687382; __insp_nv=true; __insp_targlpu=aHR0cHM6Ly9zZW1hdGV4dC5jb20vZG9jcy9zeW50aGV0aWNzLw%3D%3D; __insp_targlpt=U2VtYXRleHQgU3ludGhldGljcyBPdmVydmlldw%3D%3D; __insp_norec_sess=true; __insp_slim=1633003417275; smtsu=; sematext_sua_marker_v3_prod_us=true; _hjSessionRejected=1; last_region=EU; sematext_sua_auth_v3_pr-4064_eu=eacf24416b1cf70a5fda126932319328; sematext_sua_marker_v3_pr-4064_eu=true; _hjAbsoluteSessionInProgress=0; strumsession=0646b934-7069-4ab8-bcf7-786cf3145656; __hstc=137249775.d6177d9cff3f8c47d25bd420b1ef8797.1632816738469.1633082960216.1633089685740.14; fc823c9b-e16b-414a-817d-a7fc60893ce5-sampling-disabled=true; _hjIncludedInPageviewSample=1; _hjIncludedInSessionSample=1; sematext_sua_auth_v3_prod_us=e5e275ef37cfda1ad2aad5501b522d5e; amplitude_id_40e03bd0cd40a6855307913da0f69450sematext.com=eyJkZXZpY2VJZCI6ImEwZmVmYTMxLTRmNDktNGJjMS05NGIzLTI0NGI0ZGUwODJkNVIiLCJ1c2VySWQiOm51bGwsIm9wdE91dCI6ZmFsc2UsInNlc3Npb25JZCI6MTYzMzA4OTY4NTA3NCwibGFzdEV2ZW50VGltZSI6MTYzMzA5MDk1OTM3NCwiZXZlbnRJZCI6MTEsImlkZW50aWZ5SWQiOjAsInNlcXVlbmNlTnVtYmVyIjoxMX0=; __hssc=137249775.9.1633089685740; _gat=1' \
-              --data-raw '{"name":"browser demo monitor 6","interval":"10m","enabled":true,"locations":[1,8],"script": "'$content'","url":"https://","scriptBased":true,"conditions":[{"id":4178,"type":"ERROR","operator":"=","value":"","enabled":true},{"id":4179,"type":"METRIC","key":"synthetics.time.response","operator":"<","value":"20000","enabled":true}],"alertRule":{"schedule":[{"day":"MONDAY","index":2,"label":"MON","intervals":[],"type":"ACTIVE"},{"day":"TUESDAY","index":3,"label":"TUE","intervals":[],"type":"ACTIVE"},{"day":"WEDNESDAY","index":4,"label":"WED","intervals":[],"type":"ACTIVE"},{"day":"THURSDAY","index":5,"label":"THU","intervals":[],"type":"ACTIVE"},{"day":"FRIDAY","index":6,"label":"FRI","intervals":[],"type":"ACTIVE"},{"day":"SATURDAY","index":7,"label":"SAT","intervals":[],"type":"ACTIVE"},{"day":"SUNDAY","index":1,"label":"SUN","intervals":[],"type":"ACTIVE"}],"minDelayBetweenNotificationsInMinutes":"10","backToNormalNeeded":true,"failedRunCountToAlert":1,"notificationsEnabled":true,"useOnlyAlertRuleIntegrations":false}}'
+              script_content=$( base64 $file )
+
+              api_url=${{ secrets.SC_API_BASE_URL }}
+              api_url+='/apps/3981/monitors/browser/1153'
+
+              auth_header='Authorization: apiKey '
+              auth_header+=${{ secrets.SC_API_KEY}}
+
+              curl --location --request PUT $api_url \
+              --header $auth_header \
+              --header 'Content-Type: application/json' \
+              --data '{"script":"'$script_content'"}'
             fi
 
           done
