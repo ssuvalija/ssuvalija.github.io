@@ -42,7 +42,7 @@ jobs:
 
               echo 'data==========='
               body='{"script":"'$script_content'"}'
-              echo $body
+              body='{"script":"Ly8gVGhpcyBzY3JpcHQgbG9hZHMgdGhlIHdlYnBhZ2UgYW5kIHRha2VzIGEgc2NyZWVuc2hvdCBvZiB0aGUgbG9hZGVkIHBhZ2UuCmFzeW5jIGZ1bmN0aW9uIHRlc3RQYWdlKHBhZ2UpIHsKICAvLyBSZXBsYWNlIFlPVVJfV0VCUEFHRV9VUkwgd2l0aCBVUkwgb2YgdGhlIHdlYnBhZ2UgdG8gYmUgbW9uaXRvcmVkCiAgYXdhaXQgcGFnZS5nb3RvKCJodHRwczovL3NzdXZhbGlqYS5naXRodWIuaW8vaW5kZXguaHRtbCMiKTsKICBhd2FpdCBwYWdlLmdvdG8oImh0dHBzOi8vc3N1dmFsaWphLmdpdGh1Yi5pby9pbmRleC5odG1sIyIpOwogIGF3YWl0IHBhZ2UuZ290bygiaHR0cHM6Ly9zc3V2YWxpamEuZ2l0aHViLmlvL2luZGV4Lmh0bWwjIik7CiAgYXdhaXQgcGFnZS5nb3RvKCJodHRwczovL3NzdXZhbGlqYS5naXRodWIuaW8vaW5kZXguaHRtbCMiKTsKICBhd2FpdCBwYWdlLnNjcmVlbnNob3QoeyBwYXRoOiAnc2NyZWVuc2hvdC5qcGcnIH0pOwp9Cm1vZHVsZS5leHBvcnRzID0gdGVzdFBhZ2U7"}'
 
               api_url=https://apps.test.sematext.com/synthetics-api/api/v3/apps/3981/monitors/browser/1153
 
