@@ -37,11 +37,20 @@ jobs:
             if [[ $file == *"browser_monitor_scripts"* ]]; then
               script_content=$( base64 $file )
 
+              echo "script conetn========"
+              echo $script_content
+
               api_url=${{ secrets.SC_API_BASE_URL }}
               api_url+='/apps/3981/monitors/browser/1153'
 
+              echo "api url========"
+              echo $api_url
+
               auth_header='Authorization: apiKey '
               auth_header+=${{ secrets.SC_API_KEY}}
+
+              echo "auth header========"
+              echo $auth_header
 
               curl --location --request PUT $api_url \
               --header $auth_header \
