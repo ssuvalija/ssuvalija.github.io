@@ -40,6 +40,8 @@ jobs:
             if [[ $file == *"browser_monitor_scripts"* ]]; then
               script_content=$( base64 $file )
 
+              echo "encoded script============"
+              echo $script_content
               body='{"script":"'$script_content'"}'
 
               api_url=https://apps.test.sematext.com/synthetics-api/api/v3/apps/3981/monitors/browser/1153
