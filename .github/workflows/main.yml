@@ -29,6 +29,14 @@ jobs:
             echo $SCRIPT_FILES
           done
 
+          api_url=${{ secrets.SC_API_BASE_URL }}
+          api_url+='/apps/3981/monitors/browser/1153'
+
+          copy=$api_url
+          echo "see copy========"
+          echo $copy
+
+
           filesArray=($SCRIPT_FILES)
 
           for file in $filesArray; do
@@ -43,7 +51,7 @@ jobs:
               api_url=${{ secrets.SC_API_BASE_URL }}
               api_url+='/apps/3981/monitors/browser/1153'
 
-              copy=api_url
+              copy=$api_url
               echo "see copy========"
               echo $copy
 
