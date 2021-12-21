@@ -42,7 +42,8 @@ jobs:
 
               body='{"script":"'$script_content'"}'
 
-              line=$(head -n 1 filename)
+              line=$( head -n 1 $file )
+              echo 'first line '{$line}
 
               api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/3981/monitors/browser/1153'
 
