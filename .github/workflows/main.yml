@@ -42,7 +42,9 @@ jobs:
 
               body='{"script":"'$script_content'"}'
 
-              api_url=https://apps.test.sematext.com/synthetics-api/api/v3/apps/3981/monitors/browser/1153
+              line=$(head -n 1 filename)
+
+              api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/3981/monitors/browser/1153'
 
               curl -v --location --request PUT ${api_url} \
                 --header 'authorization: apiKey '${SC_API_KEY} \
