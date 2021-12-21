@@ -44,7 +44,11 @@ jobs:
 
               line=$( head -n 1 $file )
               IFS='=' read -r -a monitor_ids <<< "$line"
-              IFS='=' read -r -a monitos <<< "$monitor_ids"
+
+              echo 'monitor ids========'$monitor_ids
+
+              IFS='=' read -r -a monitors <<< "$monitor_ids"
+              echo 'monitors splitted========'$monitors
 
               for monitor_id in $monitors; do
                 api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/3981/monitors/browser/'${monitor_id}
