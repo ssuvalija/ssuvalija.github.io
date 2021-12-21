@@ -51,7 +51,7 @@ jobs:
               #api_url=${{ secrets.SC_API_BASE_URL }}
               #api_url+='synthetics-api/api/apps/3981/monitors/browser/1153'
 
-              api_url=https://apps.test.sematext.com/synthetics-api/api/apps/3981/monitors/browser/1153
+              api_url=https://apps.test.sematext.com/synthetics-api/api/v3/apps/3981/monitors/browser/1153
 
               auth_header='Authorization: apiKey '
               auth_header+=${{ secrets.SC_API_KEY}}
