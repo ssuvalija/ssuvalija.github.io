@@ -5,7 +5,8 @@ async function testPage(page) {
   await page.goto("https://ssuvalija.github.io/index.html#");
   await page.goto("https://ssuvalija.github.io/index.html#");
   await page.goto("https://ssuvalija.github.io/index.html#");
-  
+  await page.goto("https://ssuvalija.github.io/index.html#");
+
   
   await page.screenshot({ path: 'screenshot.jpg' });
 }
