@@ -38,7 +38,7 @@ jobs:
             echo "sending api request========="
             echo "------------------------------"
             if [[ $file == *"browser_monitor_scripts"* ]]; then
-              script_content=$( base64 $file )
+              script_content=$( base64 -w 0 $file )
 
               echo "encoded script============"
               echo $script_content
