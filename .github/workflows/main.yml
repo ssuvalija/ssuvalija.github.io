@@ -43,11 +43,6 @@ jobs:
           api_url=${{ secrets.SC_API_BASE_URL }}
           api_url+='/apps/3981/monitors/browser/1153'
 
-          copy=$api_url
-          echo "see copy========"
-          echo $copy
-
-
           filesArray=($SCRIPT_FILES)
 
           for file in $filesArray; do
@@ -56,24 +51,11 @@ jobs:
             if [[ $file == *"browser_monitor_scripts"* ]]; then
               script_content=$( base64 $file )
 
-              echo "script conetn========"
-              echo $script_content
-
               api_url=${{ secrets.SC_API_BASE_URL }}
-              api_url+='/apps/3981/monitors/browser/1153'
-
-              copy=$api_url
-              echo "see copy========"
-              echo $copy
-
-              echo "api url========"
-              echo $api_url
+              api_url+='synthetics-api/api/apps/3981/monitors/browser/1153'
 
               auth_header='Authorization: apiKey '
               auth_header+=${{ secrets.SC_API_KEY}}
-
-              echo "auth header========"
-              echo $auth_header
 
               curl -v --location --request PUT $api_url \
               --header $auth_header \
