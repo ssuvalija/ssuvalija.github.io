@@ -53,8 +53,7 @@ jobs:
 
               api_url=https://apps.test.sematext.com/synthetics-api/api/v3/apps/3981/monitors/browser/1153
 
-              auth_header='Authorization: apiKey '
-              auth_header+=${{ secrets.SC_API_KEY}}
+              auth_header='Authorization: apiKey 55d4a7c1-4d9f-44e5-be42-1a5e42be62bc'
 
               curl -v --location --request PUT $api_url \
               --header $auth_header \
