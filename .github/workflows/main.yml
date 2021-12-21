@@ -75,7 +75,7 @@ jobs:
               echo "auth header========"
               echo $auth_header
 
-              curl --location --request PUT $api_url \
+              curl -v --location --request PUT $api_url \
               --header $auth_header \
               --header 'Content-Type: application/json' \
               --data '{"script":"'$script_content'"}'
