@@ -84,7 +84,7 @@ jobs:
                 if [ $(head -1 result.txt | grep -c '"success":false') -ne 0 ]; then
                   echo '::warning:: Sync script API request failed';
                   errors+=$file
-                  break
+                  #break
                 fi
 
               done
@@ -96,7 +96,7 @@ jobs:
           if (( ${#errors[@]} )); then
             echo '::warning:: Following scripts are not synced, please check workflow logs for more details:'
             for error in "${errors[@]}"; do
-              echo '    file name: '$error
+              printf '    file name: '$error'\n'
             done
             exit 1
           fi
