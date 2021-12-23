@@ -1,4 +1,4 @@
-//appId=4125;monitorId=1234,678
+//appId=4125;monitorId=1234,67
 async function testPage(page) {
   // Replace YOUR_WEBPAGE_URL with URL of the webpage to be monitored
   await page.goto("https://ssuvalija.github.io/index.html#");
