@@ -26,7 +26,7 @@ jobs:
           SC_API_BASE_URL: ${{ secrets.SC_API_BASE_URL }}
           SC_API_KEY: ${{ secrets.SC_API_KEY }}
         run: |
-          echo 'files to be synced'
+          echo 'Files to be synced:'
           for file in "${{ steps.changed-files.outputs.modified_files }}"; do
             export SCRIPT_FILES="$file"
             echo $file
