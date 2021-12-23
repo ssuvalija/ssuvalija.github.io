@@ -48,7 +48,7 @@ jobs:
 
               length=${#ids[@]}
               if [ $length != 2 ]; then
-                  echo '::warning:: App ID and monitor IDs must be specified on the firts line using the format //appId=1;monitorId=2,3'
+                  echo '::warning:: App ID and monitor IDs must be specified on the first line using the format //appId=1;monitorId=2,3'
                   errors+=$file
                   continue
               fi
@@ -58,7 +58,7 @@ jobs:
 
               app_id_length=${#app_id[@]}
               if [ $app_id_length != 2 ]; then
-                  echo '::warning:: App ID not found. App ID and monitor IDs must be specified on the firts line using the format //appId=1;monitorId=2,3'
+                  echo '::warning:: App ID not found. App ID and monitor IDs must be specified on the first line using the format //appId=1;monitorId=2,3'
                   errors+=$file
                   continue
               fi
@@ -68,7 +68,7 @@ jobs:
 
               monitor_ids_length=${#monitor_ids[@]}
               if [ $monitor_ids_length != 2 ]; then
-                  echo '::warning:: Monitor ID not found. App ID and monitor IDs must be specified on the firts line using the format //appId=1;monitorId=2,3'
+                  echo '::warning:: Monitor ID not found. App ID and monitor IDs must be specified on the first line using the format //appId=1;monitorId=2,3'
                   errors+=$file
                   continue
               fi
@@ -92,17 +92,17 @@ jobs:
 
               done
               
-              errors_length=${#errors[@]}
-              if [ $errors_length g 0 ]; then
-                echo ''::warning:: Following scripts weren/'t synced, please check workflow logs for more details'
-                for error in "${errors[@]}"; do
-                  echo $error
-                done
-                exit 1;
-              fi
             fi
 
           done
+
+          if (( ${#errors[@]} )); then
+            echo ''::warning:: Following scripts weren/'t synced, please check workflow logs for more details'
+            for error in "${errors[@]}"; do
+              echo $error
+            done
+            exit 1
+          fi
 
 
       
