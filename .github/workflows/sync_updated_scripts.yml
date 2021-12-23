@@ -47,7 +47,7 @@ jobs:
               length=${#ids[@]}
               if [ $length != 2 ]; then
                   echo '::warning:: App ID and monitor IDs must be specified on the first line using the format //appId=1;monitorId=2,3'
-                  errors+=$file
+                  errors+=($file)
                   continue
               fi
 
@@ -57,7 +57,7 @@ jobs:
               app_id_length=${#app_id[@]}
               if [ $app_id_length != 2 ]; then
                   echo '::warning:: App ID not found. App ID and monitor IDs must be specified on the first line using the format //appId=1;monitorId=2,3'
-                  errors+=$file
+                  errors+=($file)
                   continue
               fi
 
@@ -67,7 +67,7 @@ jobs:
               monitor_ids_length=${#monitor_ids[@]}
               if [ $monitor_ids_length != 2 ]; then
                   echo '::warning:: Monitor ID not found. App ID and monitor IDs must be specified on the first line using the format //appId=1;monitorId=2,3'
-                  errors+=$file
+                  errors+=($file)
                   continue
               fi
 
@@ -83,7 +83,7 @@ jobs:
                 cat result.txt
                 if [ $(head -1 result.txt | grep -c '"success":false') -ne 0 ]; then
                   echo '::warning:: Sync script API request failed';
-                  errors+=$file
+                  errors+=($file)
                   #break
                 fi
 
@@ -96,7 +96,7 @@ jobs:
           if (( ${#errors[@]} )); then
             echo '::warning:: Following scripts are not synced, please check workflow logs for more details:'
             for error in "${errors[@]}"; do
-              printf '    file name: '$error'\n'
+              echo '    file name: '$error
             done
             exit 1
           fi
