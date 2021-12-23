@@ -75,7 +75,7 @@ jobs:
 
               for monitor_id in "${monitors[@]}"; do
                 api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/'${app_id}'/monitors/browser/'${monitor_id}
-                curl -v --location --request PUT ${api_url} \
+                curl --location --request PUT ${api_url} \
                   --header 'authorization: apiKey '${SC_API_KEY} \
                     --header 'Content-Type: application/json' \
                       --data-raw ${body} > result.txt
