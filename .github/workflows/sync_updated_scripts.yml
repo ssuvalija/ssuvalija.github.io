@@ -35,7 +35,7 @@ jobs:
           filesArray=($SCRIPT_FILES)
           errors=()
 
-          for file in $filesArray; do
+          for file in "${filesArray[@]}"; do
             if [[ $file == *"browser_monitor_scripts"* ]]; then
               script_content=$( base64 -w 0 $file )
 
