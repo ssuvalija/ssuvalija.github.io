@@ -7,6 +7,7 @@ async function testPage(page) {
 }
 module.exports = testPage;
 
+//sync both scripts
 
 
 
