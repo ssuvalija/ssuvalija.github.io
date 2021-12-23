@@ -33,11 +33,15 @@ jobs:
           filesArray=($SCRIPT_FILES)
           errors=()
 
+          echo 'files to be aynced'$filesArray
+
           for file in $filesArray; do
             if [[ $file == *"browser_monitor_scripts"* ]]; then
               script_content=$( base64 -w 0 $file )
 
               body='{"script":"'$script_content'"}'
+
+              echo "script "$body
 
               line=$( head -n 1 $file )
               IFS=';' read -r -a ids <<< "$line"
@@ -81,7 +85,7 @@ jobs:
                 cat result.txt
                 if [ $(head -1 result.txt | grep -c '"success":false') -ne 0 ]; then
                   echo '::warning:: Sync script API request failed';
-                  echo `` 
+                  echo `cat result.txt` 
                   errors+=$file
                   continue
                 fi
