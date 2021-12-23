@@ -31,6 +31,7 @@ jobs:
           done
 
           filesArray=($SCRIPT_FILES)
+          declare –a errors
 
           for file in $filesArray; do
             if [[ $file == *"browser_monitor_scripts"* ]]; then
@@ -43,7 +44,9 @@ jobs:
 
               length=${#ids[@]}
               if [ $length != 2 ]; then
-                  echo "App ID and monitor IDs must be specified on the firts line using the format //appId=1;monitorId=2,3"
+                  echo '::warning:: App ID and monitor IDs must be specified on the firts line using the format //appId=1;monitorId=2,3'
+                  errors+=$file
+                  continue
               fi
 
               IFS='=' read -r -a app_id <<< "${ids[0]}"
@@ -51,31 +54,47 @@ jobs:
 
               app_id_length=${#app_id[@]}
               if [ $app_id_length != 2 ]; then
-                  echo "App ID not found. App ID and monitor IDs must be specified on the firts line using the format //appId=1;monitorId=2,3"
+                  echo '::warning:: App ID not found. App ID and monitor IDs must be specified on the firts line using the format //appId=1;monitorId=2,3'
+                  errors+=$file
+                  continue
               fi
-
-              echo '::warning:: this is a warning'
 
               IFS='=' read -r -a monitor_ids <<< "${ids[1]}"
               monitor_ids=${monitor_ids[1]}
 
               monitor_ids_length=${#monitor_ids[@]}
               if [ $monitor_ids_length != 2 ]; then
-                  echo "Monitor ID not found. App ID and monitor IDs must be specified on the firts line using the format //appId=1;monitorId=2,3"
+                  echo '::warning:: Monitor ID not found. App ID and monitor IDs must be specified on the firts line using the format //appId=1;monitorId=2,3'
+                  errors+=$file
+                  continue
               fi
 
               IFS=',' read -r -a monitors <<< "$monitor_ids"
 
               for monitor_id in "${monitors[@]}"; do
-                echo "sending api request"
-                echo "------------------------------"
                 api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/'${app_id}'/monitors/browser/'${monitor_id}
                 curl -v --location --request PUT ${api_url} \
                   --header 'authorization: apiKey '${SC_API_KEY} \
                     --header 'Content-Type: application/json' \
-                      --data-raw ${body}
+                      --data-raw ${body} > result.txt
 
-              done 
+                cat result.txt
+                if [ $(head -1 result.txt | grep -c '"success":false') -ne 0 ]; 
+                  then echo '::warning:: Sync script API request failed'; 
+                  errors+=$file
+                  continue
+                fi
+
+              done
+              
+              errors_length=${#errors[@]}
+              if [ $errors_length g 0 ]; then
+                echo ''::warning:: Following scripts weren/'t synced, please check workflow logs for more details'
+                for error in "${errors[@]}"; do
+                  echo $error
+                done
+                exit 1;
+              fi
             fi
 
           done
