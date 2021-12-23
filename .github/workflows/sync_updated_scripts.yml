@@ -39,7 +39,7 @@ jobs:
             if [[ $file == *"browser_monitor_scripts"* ]]; then
               script_content=$( base64 -w 0 $file )
 
-              body='{ "script":"'$script_content'", "scriptBased":"true" }'
+              body='{"script":"'$script_content'", "scriptBased":"true"}'
 
               line=$( head -n 1 $file )
               IFS=';' read -r -a ids <<< "$line"
