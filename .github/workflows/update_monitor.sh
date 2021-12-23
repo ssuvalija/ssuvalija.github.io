@@ -4,6 +4,7 @@ file='test-script.js'
 
 # (echo "#monitorId=67667868" && cat 'test-script.js') > filename1 && mv filename1 'test-script.js'
 
+errors=()
 not_synced=""
 line=$( head -n 1 $file )
 IFS=';' read -r -a ids <<< "$line"
@@ -21,9 +22,12 @@ app_id=${app_id[1]}
 
 app_id_length=${#app_id[@]}
 if [ $app_id_length != 2 ]; then
+    errors+="new error"
     echo "App ID not fouind. App ID and monitor IDs must be specified on the firts line using the format //appId=1;monitorId=2,3"
 fi
 
+echo "============"
+echo $errors
 
 IFS='=' read -r -a monitor_ids <<< "${ids[1]}"
 monitor_ids=${monitor_ids[1]}
@@ -59,7 +63,6 @@ curl --location --request PUT $api_url \
 
 cat result.txt
 
-echo `cat result.txt`
 if [ $(head -1 result.txt | grep -c '"success":false') -ne 0 ]; then echo 'request failed'; fi
 
 # curl --location --request PUT ${api_url} \
