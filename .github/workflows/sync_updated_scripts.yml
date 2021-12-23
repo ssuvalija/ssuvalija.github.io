@@ -79,8 +79,9 @@ jobs:
                       --data-raw ${body} > result.txt
 
                 cat result.txt
-                if [ $(head -1 result.txt | grep -c '"success":false') -ne 0 ]; 
-                  then echo '::warning:: Sync script API request failed'; 
+                if [ $(head -1 result.txt | grep -c '"success":false') -ne 0 ]; then
+                  echo '::warning:: Sync script API request failed';
+                  echo `cat result.txt` 
                   errors+=$file
                   continue
                 fi
