@@ -84,7 +84,7 @@ jobs:
                 if [ $(head -1 result.txt | grep -c '"success":false') -ne 0 ]; then
                   echo '::warning:: Sync script API request failed';
                   errors+=($file)
-                  #break
+                  break
                 fi
 
               done
