@@ -11,17 +11,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest  
-    name: Test changed-files
+    name: Sync Updated Browser Monitor Scripts to Sematext Cloud
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0 
 
-      - name: Get changed files
+      - name: Detect changed files
         id: changed-files
         uses: tj-actions/changed-files@v1.1.3
 
-      - name: List all modified files
+      - name: Send changed scripts to Sematext Cloud
         env:
           SC_API_BASE_URL: ${{ secrets.SC_API_BASE_URL }}
           SC_API_KEY: ${{ secrets.SC_API_KEY }}
@@ -97,9 +97,9 @@ jobs:
           done
 
           if (( ${#errors[@]} )); then
-            echo ''::warning:: Following scripts weren/'t synced, please check workflow logs for more details'
+            echo '::warning:: Following scripts weren't synced, please check workflow logs for more details:'
             for error in "${errors[@]}"; do
-              echo $error
+              echo '    file name: '$error
             done
             exit 1
           fi
