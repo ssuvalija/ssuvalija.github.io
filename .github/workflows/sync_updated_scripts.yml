@@ -1,0 +1,84 @@
+name: Sync Updated Browser Monitor Scripts to Sematext Cloud
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  
+    name: Test changed-files
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v1.1.3
+
+      - name: List all modified files
+        env:
+          SC_API_BASE_URL: ${{ secrets.SC_API_BASE_URL }}
+          SC_API_KEY: ${{ secrets.SC_API_KEY }}
+        run: |
+          for file in "${{ steps.changed-files.outputs.modified_files }}"; do
+            export SCRIPT_FILES="$file"
+          done
+
+          filesArray=($SCRIPT_FILES)
+
+          for file in $filesArray; do
+            if [[ $file == *"browser_monitor_scripts"* ]]; then
+              script_content=$( base64 -w 0 $file )
+
+              body='{"script":"'$script_content'"}'
+
+              line=$( head -n 1 $file )
+              IFS=';' read -r -a ids <<< "$line"
+
+              length=${#ids[@]}
+              if [ $length != 2 ]; then
+                  echo "App ID and monitor IDs must be specified on the firts line using the format //appId=1;monitorId=2,3"
+              fi
+
+              IFS='=' read -r -a app_id <<< "${ids[0]}"
+              app_id=${app_id[1]}
+
+              app_id_length=${#app_id[@]}
+              if [ $app_id_length != 2 ]; then
+                  echo "App ID not found. App ID and monitor IDs must be specified on the firts line using the format //appId=1;monitorId=2,3"
+              fi
+
+              echo '::warning:: this is a warning'
+
+              IFS='=' read -r -a monitor_ids <<< "${ids[1]}"
+              monitor_ids=${monitor_ids[1]}
+
+              monitor_ids_length=${#monitor_ids[@]}
+              if [ $monitor_ids_length != 2 ]; then
+                  echo "Monitor ID not found. App ID and monitor IDs must be specified on the firts line using the format //appId=1;monitorId=2,3"
+              fi
+
+              IFS=',' read -r -a monitors <<< "$monitor_ids"
+
+              for monitor_id in "${monitors[@]}"; do
+                echo "sending api request"
+                echo "------------------------------"
+                api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/'${app_id}'/monitors/browser/'${monitor_id}
+                curl -v --location --request PUT ${api_url} \
+                  --header 'authorization: apiKey '${SC_API_KEY} \
+                    --header 'Content-Type: application/json' \
+                      --data-raw ${body}
+
+              done 
+            fi
+
+          done
+
+
+      
