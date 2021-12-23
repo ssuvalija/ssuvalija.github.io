@@ -34,16 +34,16 @@ if [ $monitor_ids_length != 2 ]; then
 fi
 
 
-# script_content=$( base64 $file)
+script_content=$( base64 $file)
 
-# api_url='https://apps.test.sematext.com'
-# api_url+='/synthetics-api/api/v3/apps/3981/monitors/browser/1153'
+api_url='https://apps.test.sematext.com'
+api_url+='/synthetics-api/api/v3/apps/3981/monitors/browser/1153'
 
 #  #api_url=${{ secrets.SC_API_BASE_URL }}
 #  #api_url+='/synthetics-api/api/apps/3981/monitors/browser/1153'
 
-# auth_header='Authorization: apiKey '
-# auth_header+='55d4a7c1-4d9f-44e5-be42-1a5e42be62bc'
+auth_header='Authorization: apiKey '
+auth_header+='55d4a7c1-4d9f-44e5-be42-1a5e42be62bc'
 
 # echo $api_url
 
@@ -52,7 +52,15 @@ fi
 # echo "++++++++++++++++++++++++"
 # echo ${api_url}
 
-# #curl -v --location --request PUT $api_url --header $auth_header --header 'Content-Type: application/json' --data '{"script":"'$script_content'"}' 
+curl --location --request PUT $api_url \
+--header $auth_header \
+--header 'Content-Type: application/json' \
+--data '{"script":"'$script_content'"}' > result.txt
+
+cat result.txt
+
+echo `cat result.txt`
+if [ $(head -1 result.txt | grep -c '"success":false') -ne 0 ]; then echo 'request failed'; fi
 
 # curl --location --request PUT ${api_url} \
 # --header 'Authorization: apiKey 55d4a7c1-4d9f-44e5-be42-1a5e42be62bc' \
