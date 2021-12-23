@@ -31,7 +31,7 @@ jobs:
           done
 
           filesArray=($SCRIPT_FILES)
-          declare –a errors
+          errors=()
 
           for file in $filesArray; do
             if [[ $file == *"browser_monitor_scripts"* ]]; then
@@ -81,7 +81,7 @@ jobs:
                 cat result.txt
                 if [ $(head -1 result.txt | grep -c '"success":false') -ne 0 ]; then
                   echo '::warning:: Sync script API request failed';
-                  echo `cat result.txt` 
+                  echo `` 
                   errors+=$file
                   continue
                 fi
