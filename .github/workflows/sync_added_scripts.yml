@@ -1,0 +1,91 @@
+name: Sync Newly Created Browser Monitor Scripts to Sematext Cloud 
+
+on:
+  push:
+    branches: 
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 
+
+      - name: Detect changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v1.1.3
+
+      - name: Send newly created scripts to Sematext Cloud (Action will create Browser monitor for each added script)
+        env:
+          SC_API_BASE_URL: ${{ secrets.SC_API_BASE_URL }}
+          SC_API_KEY: ${{ secrets.SC_API_KEY }}
+        run: |
+          for file in "${{ steps.changed-files.outputs.added_files }}"; do 
+            export SCRIPT_FILES="$file"
+          done
+
+          filesArray=($SCRIPT_FILES)
+          errors=()
+
+          echo 'Files to be synced:'
+          for file in "${filesArray[@]}"; do
+            if [[ $file == *"browser_monitor_scripts"* ]]; then
+              echo $file
+              script_content=$( base64 -w 0 $file )
+
+              #get app ID 
+              line=$( head -n 1 $file )
+              IFS='=' read -r -a app_id <<< "$line"
+
+              length=${#app_id[@]}
+              if [ $length != 2 ]; then
+                  echo '::warning:: App ID must be specified on the first line using the format //appId=1'
+                  errors+=($file)
+                  continue
+              fi
+
+              app_id=${app_id[1]}
+
+              #create request body with default values
+              name=$file
+              scriptBased=true
+              enabled=true
+              locations=($(seq 1))
+              body='{"name":'$name',"interval":"1h","locations:'$locations',""scriptBased":'$scriptBased',"enabled":'$enabled',"script":"'$script_content'"}'
+
+              api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/'${app_id}'/monitors/browser/'
+                curl -s --location --request POST ${api_url} \
+                  --header 'authorization: apiKey '${SC_API_KEY} \
+                    --header 'Content-Type: application/json' \
+                      --data-raw $body > result.txt
+
+                cat result.txt
+                if [ $(head -1 result.txt | grep -c '"success":false') -ne 0 ]; then
+                  echo '::warning:: Sync script API request failed';
+                  errors+=($file)
+                  break
+                else
+                  #update file with app ID and monitor ID comment so it can be synced later when update occurs
+                  cd browser_monitor_scripts
+
+                  comment='//appId='$app_id';monitorId=xxxtTODO'
+                  sed -i "1s/.*/$comment/" $file
+
+                  #(echo "//monitorId=6766,7868" && cat 'script_monitor_id_1573.js') > filename1 && mv filename1 'script_monitor_id_1573.js'
+                  cd ../
+                fi
+            fi
+          done
+
+    - name: Commit files # commit updated scripts with comment //app_id=x;monitor_id=y
+      run: |
+        git config --local user.name "SC-sync-scripts-bot"
+        git add ./browser_monitor_scripts
+        git commit -m "Updating scripts"
+    - name: Push changes 
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        force: true
