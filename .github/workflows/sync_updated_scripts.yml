@@ -41,8 +41,6 @@ jobs:
               scriptBased=true
               body='{"scriptBased":'$scriptBased',"script":"'$script_content'"}'
 
-              echo "body to be sent=-========"$body
-
               line=$( head -n 1 $file )
               IFS=';' read -r -a ids <<< "$line"
 
