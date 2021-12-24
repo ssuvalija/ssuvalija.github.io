@@ -24,15 +24,16 @@ jobs:
           SC_API_BASE_URL: ${{ secrets.SC_API_BASE_URL }}
           SC_API_KEY: ${{ secrets.SC_API_KEY }}
         run: |
+
+          filesArray=()
           for file in "${{ steps.changed-files.outputs.added_files }}"; do 
-            export SCRIPT_FILES="$file"
+            filesArray+=($file)
           done
 
           for file in "${{ steps.changed-files.outputs.renamed_files }}"; do 
-            export SCRIPT_FILES="$file"
+            filesArray+=($file)
           done
 
-          filesArray=($SCRIPT_FILES)
           errors=()
 
           echo 'Files to be synced:'
@@ -48,7 +49,7 @@ jobs:
               IFS='=' read -r -a app_id <<< "$line"
 
 
-               echo 'first linet'$line
+              echo 'first linet'$line
 
               length=${#app_id[@]}
               if [ $length != 2 ]; then
