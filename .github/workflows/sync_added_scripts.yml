@@ -37,9 +37,14 @@ jobs:
               echo $file
               script_content=$( base64 -w 0 $file )
 
+              echo 'script content======='$script_content
+
               #get app ID 
               line=$( head -n 1 $file )
               IFS='=' read -r -a app_id <<< "$line"
+
+
+               echo 'first linet'$line
 
               length=${#app_id[@]}
               if [ $length != 2 ]; then
@@ -57,8 +62,13 @@ jobs:
               locations=($(seq 1))
               body='{"name":'$name',"interval":"1h","locations:'$locations',""scriptBased":'$scriptBased',"enabled":'$enabled',"script":"'$script_content'"}'
 
-              api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/'${app_id}'/monitors/browser/'
-                curl -s --location --request POST ${api_url} \
+              echo "request body======"$body
+
+              api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/'${app_id}'/monitors/browser'
+
+              echo 'api url========'$api_url
+
+                curl --location --request POST ${api_url} \
                   --header 'authorization: apiKey '${SC_API_KEY} \
                     --header 'Content-Type: application/json' \
                       --data-raw $body > result.txt

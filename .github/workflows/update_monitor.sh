@@ -53,19 +53,22 @@ auth_header+='55d4a7c1-4d9f-44e5-be42-1a5e42be62bc'
 
  echo $auth_header
 
+  comment="\/\/appId="$app_id";monitorId=xxxtTODO"
+  sed -i.bak "1s/.*/$comment/" $file
+
 # echo "++++++++++++++++++++++++"
 # echo ${api_url}
-scriptBased=false
-body='{"script":"'$script_content'","scriptBased":'$scriptBased'}'
+# scriptBased=false
+# body='{"script":"'$script_content'","scriptBased":'$scriptBased'}'
 
-curl --location --request PUT $api_url \
---header 'Authorization: apiKey 55d4a7c1-4d9f-44e5-be42-1a5e42be62bc' \
---header 'Content-Type: application/json' \
---data-raw $body > result.txt
+# curl --location --request PUT $api_url \
+# --header 'Authorization: apiKey 55d4a7c1-4d9f-44e5-be42-1a5e42be62bc' \
+# --header 'Content-Type: application/json' \
+# --data-raw $body > result.txt
 
-cat result.txt
+# cat result.txt
 
-if [ $(head -1 result.txt | grep -c '"success":false') -ne 0 ]; then echo 'request failed'; fi
+# if [ $(head -1 result.txt | grep -c '"success":false') -ne 0 ]; then echo 'request failed'; fi
 
 # curl --location --request PUT ${api_url} \
 # --header 'Authorization: apiKey 55d4a7c1-4d9f-44e5-be42-1a5e42be62bc' \

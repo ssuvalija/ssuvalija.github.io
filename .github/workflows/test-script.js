@@ -1,4 +1,4 @@
-//appId=33monitorId=44444
+//appId=;monitorId=xxxtTODO
 async function testPage(page) {
   // Replace YOUR_WEBPAGE_URL with URL of the webpage to be monitored
   await page.goto("https://selma.github.io/index.html#");

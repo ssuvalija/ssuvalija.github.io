@@ -26,17 +26,17 @@ jobs:
           SC_API_BASE_URL: ${{ secrets.SC_API_BASE_URL }}
           SC_API_KEY: ${{ secrets.SC_API_KEY }}
         run: |
-          echo 'Files to be synced:'
           for file in "${{ steps.changed-files.outputs.modified_files }}"; do
             export SCRIPT_FILES="$file"
-            echo $file
           done
 
           filesArray=($SCRIPT_FILES)
           errors=()
 
+          echo 'Files to be synced:'
           for file in "${filesArray[@]}"; do
             if [[ $file == *"browser_monitor_scripts"* ]]; then
+              echo $file
               script_content=$( base64 -w 0 $file )
               scriptBased=true
               body='{"scriptBased":'$scriptBased',"script":"'$script_content'"}'
