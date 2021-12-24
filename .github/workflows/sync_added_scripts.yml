@@ -42,16 +42,9 @@ jobs:
               echo $file
               script_content=$( base64 -w 0 $file )
 
-              echo 'script content======='
-              echo $script_content
-              cat $file
-              echo '=============='
               #get app ID 
               line=$( head -n 1 $file )
               IFS='=' read -r -a app_id <<< "$line"
-
-
-              echo 'first linet'$line
 
               length=${#app_id[@]}
               if [ $length != 2 ]; then
@@ -63,12 +56,16 @@ jobs:
               app_id=${app_id[1]}
 
               #create request body with default values
-              name=$file
+
+              IFS='/' read -r -a file_name_parsed <<< "$file"
+              index=${#file_name_parsed[@]}-1
+              name=${file_name_parsed[$index]}
               scriptBased=true
               enabled=true
               locations=()
               locations+=1
-              body='{"name":"'$name'","interval":"1h","locations":[3],"scriptBased":'$scriptBased',"enabled":'$enabled',"script":"'$script_content'"}'
+              isGitHubSync=true
+              body='{"name":"'$name'","interval":"1h","locations":[3],"scriptBased":'$scriptBased',"enabled":'$enabled',"script":"'$script_content'","isGitHubSync":'$isGitHubSync'}'
 
               api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/'${app_id}'/monitors/browser'
 
