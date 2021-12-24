@@ -28,6 +28,10 @@ jobs:
             export SCRIPT_FILES="$file"
           done
 
+          for file in "${{ steps.changed-files.outputs.renamed_files }}"; do 
+            export SCRIPT_FILES="$file"
+          done
+
           filesArray=($SCRIPT_FILES)
           errors=()
 
