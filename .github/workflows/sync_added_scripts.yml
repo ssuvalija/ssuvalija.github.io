@@ -68,7 +68,7 @@ jobs:
               enabled=true
               locations=()
               locations+=1
-              body='{"name":'$name',"interval":"1h","locations:'$locations',""scriptBased":'$scriptBased',"enabled":'$enabled',"script":"'$script_content'"}'
+              body='{"name":'$name',"interval":"1h","locations:[1],""scriptBased":'$scriptBased',"enabled":'$enabled',"script":"'$script_content'"}'
 
               echo "request body======"$body
 
