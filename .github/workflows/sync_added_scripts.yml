@@ -1,13 +1,15 @@
 name: Sync Newly Created Browser Monitor Scripts to Sematext Cloud 
-
 on:
   push:
-    branches: 
+    branches:
+      - main
+  pull_request:
+    branches:
       - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest 
     steps:
       - uses: actions/checkout@v2
         with:
@@ -78,14 +80,13 @@ jobs:
                 fi
             fi
           done
-
-    - name: Commit files # commit updated scripts with comment //app_id=x;monitor_id=y
-      run: |
-        git config --local user.name "SC-sync-scripts-bot"
-        git add ./browser_monitor_scripts
-        git commit -m "Updating scripts"
-    - name: Push changes 
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        force: true
+      - name: Commit files # commit updated scripts with comment //app_id=x;monitor_id=y
+        run: |
+          git config --local user.name "SC-sync-scripts-bot"
+          git add ./browser_monitor_scripts
+          git commit -m "Updating scripts"
+      - name: Push changes 
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
