@@ -68,13 +68,9 @@ jobs:
               enabled=true
               locations=()
               locations+=1
-              body='{"name":"'$name'"","interval":"1h","locations:[1],""scriptBased":'$scriptBased',"enabled":'$enabled',"script":"'$script_content'"}'
-
-              echo "request body======"$body
+              body='{"name":"'$name'","interval":"1h","locations":[3],"scriptBased":'$scriptBased',"enabled":'$enabled',"script":"'$script_content'"}'
 
               api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/'${app_id}'/monitors/browser'
-
-              echo 'api url========'$api_url
 
                 curl --location --request POST ${api_url} \
                   --header 'authorization: apiKey '${SC_API_KEY} \
@@ -90,7 +86,7 @@ jobs:
                   #update file with app ID and monitor ID comment so it can be synced later when update occurs
                   cd browser_monitor_scripts
 
-                  comment='\/\/appId='$app_id';monitorId=xxxtTODO'
+                  comment='\/\/appId='$app_id';monitorId=TODO'
                   sed -i "1s/.*/$comment/" $file
 
                   #(echo "//monitorId=6766,7868" && cat 'script_monitor_id_1573.js') > filename1 && mv filename1 'script_monitor_id_1573.js'
