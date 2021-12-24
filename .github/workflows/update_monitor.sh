@@ -55,11 +55,13 @@ auth_header+='55d4a7c1-4d9f-44e5-be42-1a5e42be62bc'
 
 # echo "++++++++++++++++++++++++"
 # echo ${api_url}
+scriptBased=false
+body='{"script":"'$script_content'","scriptBased":'$scriptBased'}'
 
 curl --location --request PUT $api_url \
 --header 'Authorization: apiKey 55d4a7c1-4d9f-44e5-be42-1a5e42be62bc' \
 --header 'Content-Type: application/json' \
---data '{"script":"'$script_content'","scriptBased":true}' > result.txt
+--data-raw $body > result.txt
 
 cat result.txt
 
