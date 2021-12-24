@@ -39,7 +39,7 @@ jobs:
             if [[ $file == *"browser_monitor_scripts"* ]]; then
               script_content=$( base64 -w 0 $file )
               scriptBased=true
-              body='{"scriptBased":'$scriptBased',"script": "'$script_content'"}'
+              body='{"scriptBased":'$scriptBased',"script":"'$script_content'"}'
 
               echo "body to be sent=-========"$body
 
