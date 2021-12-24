@@ -1,7 +1,7 @@
 //appId=3981;monitorId=1153,1189
 async function testPage(page) {
   // Replace YOUR_WEBPAGE_URL with URL of the webpage to be monitored
-  await page.goto("https://sematext.com/docs");
+  await page.goto("https://news.ycombinator.com/");
 
   await page.screenshot({ path: 'screenshot.jpg' });
 }
