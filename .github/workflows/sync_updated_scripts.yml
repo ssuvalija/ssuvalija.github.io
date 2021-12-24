@@ -38,8 +38,8 @@ jobs:
           for file in "${filesArray[@]}"; do
             if [[ $file == *"browser_monitor_scripts"* ]]; then
               script_content=$( base64 -w 0 $file )
-
-              body='{"scriptBased":true,"script": "'$script_content'"}'
+              scriptBased=true
+              body='{"scriptBased":'$scriptBased',"script": "'$script_content'"}'
 
               line=$( head -n 1 $file )
               IFS=';' read -r -a ids <<< "$line"
@@ -78,7 +78,7 @@ jobs:
                 curl -s --location --request PUT ${api_url} \
                   --header 'authorization: apiKey '${SC_API_KEY} \
                     --header 'Content-Type: application/json' \
-                      --data-raw ${body} > result.txt
+                      --data ${body} > result.txt
 
                 cat result.txt
                 if [ $(head -1 result.txt | grep -c '"success":false') -ne 0 ]; then
