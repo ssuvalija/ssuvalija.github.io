@@ -42,8 +42,10 @@ jobs:
               echo $file
               script_content=$( base64 -w 0 $file )
 
-              echo 'script content======='$script_content
-
+              echo 'script content======='
+              echo $script_content
+              cat $file
+              echo '=============='
               #get app ID 
               line=$( head -n 1 $file )
               IFS='=' read -r -a app_id <<< "$line"
