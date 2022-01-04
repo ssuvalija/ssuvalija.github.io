@@ -69,6 +69,9 @@ VARIABLE_NAME='  aaa  bbb  '
    name="$(echo -e "${name}" | tr -d '[[:space:]]')"
 
 echo "name======"$name
+
+
+echo "{\"success\":true,\"data\":{\"id\":1204,\"name\":\"new_script_4.js" | sed -e 's/.*id":\(.*\),.*/\1/'
 # name=$file
 # scriptBased=true
 # enabled=true
