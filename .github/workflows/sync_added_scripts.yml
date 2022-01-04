@@ -103,11 +103,12 @@ jobs:
             fi
           done
       - name: Commit files # commit updated scripts with comment //app_id=x;monitor_id=y
-        if: SKIP_COMMIT == 'false'
         run: |
-          git config --local user.name "SC-sync-scripts-bot"
-          git add ./browser_monitor_scripts
-          git commit -m "Updating scripts"
+          if [ $SKIP_COMMIT == 'false' ]; then
+            git config --local user.name "SC-sync-scripts-bot"
+            git add ./browser_monitor_scripts
+            git commit -m "Updating scripts"
+          fi
       - name: Push changes 
         uses: ad-m/github-push-action@master
         with:
