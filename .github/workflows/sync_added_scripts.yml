@@ -55,6 +55,9 @@ jobs:
 
               app_id=${app_id[1]}
 
+              #remove whitespaces
+              app_id="$(echo -e "${app_id}" | tr -d '[[:space:]]')"
+
               #create request body with default values
 
               IFS='/' read -r -a file_name_parsed <<< "$file"
@@ -62,9 +65,8 @@ jobs:
               name=${file_name_parsed[$index]}
               scriptBased=true
               enabled=true
-              locations=()
-              locations+=1
               isGitHubSync=true
+              #TODO replace location id, for prod it should be 1 instead of 3
               body='{"name":"'$name'","interval":"1h","locations":[3],"scriptBased":'$scriptBased',"enabled":'$enabled',"script":"'$script_content'","isGitHubSync":'$isGitHubSync'}'
 
               api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/'${app_id}'/monitors/browser'

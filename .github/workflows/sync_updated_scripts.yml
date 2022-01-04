@@ -52,7 +52,6 @@ jobs:
               fi
 
               IFS='=' read -r -a app_id <<< "${ids[0]}"
-              app_id=${app_id[1]}
 
               app_id_length=${#app_id[@]}
               if [ $app_id_length != 2 ]; then
@@ -60,6 +59,11 @@ jobs:
                   errors+=($file)
                   continue
               fi
+
+              app_id=${app_id[1]}
+
+              #remove whitespaces
+              app_id="$(echo -e "${app_id}" | tr -d '[[:space:]]')"
 
               IFS='=' read -r -a monitor_ids <<< "${ids[1]}"
               monitor_ids=${monitor_ids[1]}
@@ -74,6 +78,8 @@ jobs:
               IFS=',' read -r -a monitors <<< "$monitor_ids"
 
               for monitor_id in "${monitors[@]}"; do
+                #remove whitespaces from monitor id
+                monitor_id="$(echo -e "${minitor_id}" | tr -d '[[:space:]]')"
                 api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/'${app_id}'/monitors/browser/'${monitor_id}
                 curl -s --location --request PUT ${api_url} \
                   --header 'authorization: apiKey '${SC_API_KEY} \
