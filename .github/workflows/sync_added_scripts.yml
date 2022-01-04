@@ -36,6 +36,13 @@ jobs:
 
           errors=()
 
+          length=${#filesArray[@]}
+
+          if [ $length == 0 ]; then
+            echo 'No added files found.'
+            exit 0
+          fi
+
           echo 'Files to be synced:'
           for file in "${filesArray[@]}"; do
             if [[ $file == *"browser_monitor_scripts"* ]]; then
