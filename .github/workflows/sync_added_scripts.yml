@@ -94,7 +94,7 @@ jobs:
                   echo "{ \"foo\": 123, \"bar\": 456 }" | jq '.foo'
                   first_line=$( head -1 result.txt )
                   echo "first line goes below==========="
-                  echo $first_line
+                  echo "$first_line" | jq '.data'
                   monitorId=`echo $first_line | jq '.data.id'`
                   echo "monitor ID ======"$monitor_id=
                   comment='\/\/appId='$app_id';monitorId='$monitor_id''
