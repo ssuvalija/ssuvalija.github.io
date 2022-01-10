@@ -90,20 +90,13 @@ jobs:
                   break
                 else
                   #update file with app ID and monitor ID comment so it can be synced later when update occurs
-                  #cd browser_monitor_scripts
                   echo "{ \"foo\": 123, \"bar\": 456 }" | jq '.foo'
                   first_line=$( head -1 result.txt )
-                  echo "first line goes below==========="
-                  echo "$first_line" | jq '.data.id'
-                  monitorId=`echo $first_line | jq '.data.id'`
-                  echo "monitor ID ======"$monitor_id=
+                  monitor_id=`echo $first_line | jq '.data.id'`
                   comment='\/\/appId='$app_id';monitorId='$monitor_id''
                   sed -i "1s/.*/$comment/" $file
 
                   export SKIP_COMMIT='false'
-
-                  #(echo "//monitorId=6766,7868" && cat 'script_monitor_id_1573.js') > filename1 && mv filename1 'script_monitor_id_1573.js'
-                  #cd ../
                 fi
             fi
           done
