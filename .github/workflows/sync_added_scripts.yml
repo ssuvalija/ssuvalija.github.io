@@ -92,7 +92,8 @@ jobs:
                   #update file with app ID and monitor ID comment so it can be synced later when update occurs
                   #cd browser_monitor_scripts
 
-                  monitor_id=`echo { head -1 result.txt } | sed -e 's/.*id":\(.*\),.*/\1/'`
+                  first_line=$( head -1 result.txt )
+                  monitorId=`echo $first_line | jq '.data.id'`
                   echo "monitor ID ======"$monitor_id=
                   comment='\/\/appId='$app_id';monitorId='$monitor_id''
                   sed -i "1s/.*/$comment/" $file
