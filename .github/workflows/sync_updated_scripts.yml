@@ -79,7 +79,7 @@ jobs:
 
               for monitor_id in "${monitors[@]}"; do
                 #remove whitespaces from monitor id
-                monitor_id="$(echo -e "${minitor_id}" | tr -d '[[:space:]]')"
+                monitor_id="$(echo -e "${monitor_id}" | tr -d '[[:space:]]')"
                 api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/'${app_id}'/monitors/browser/'${monitor_id}
                 echo "api URL+++++++++++"
                 echo $api_url
