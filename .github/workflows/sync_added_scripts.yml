@@ -40,7 +40,7 @@ jobs:
 
           if [ $length == 0 ]; then
             echo 'No added files found.'
-            export SKIP_COMMIT='true'
+            export SKIP_COMMIT=1
           fi
 
           echo 'Files to be synced:'
@@ -94,17 +94,17 @@ jobs:
                   comment='\/\/appId='$app_id';monitorId='$monitor_id''
                   sed -i "1s/.*/$comment/" "$file"
 
-                  export SKIP_COMMIT='false'
+                  export SKIP_COMMIT=0
                 fi
             fi
           done
       - name: Commit files # commit updated scripts with comment //app_id=x;monitor_id=y
         run: |
-          # if [ "$SKIP_COMMIT" == "false" ]; then
+          if [ "$SKIP_COMMIT" eq 0 ]; then
             git config --local user.name "Sematext-sync-scripts-bot"
             git add ./browser_monitor_scripts
             git commit -m "Updating scripts"
-        #  fi
+          fi
       - name: Push changes 
         uses: ad-m/github-push-action@master
         with:
