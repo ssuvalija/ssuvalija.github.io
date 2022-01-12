@@ -84,7 +84,7 @@ jobs:
                 curl --location --request POST ${api_url} \
                   --header 'authorization: apiKey '${SC_API_KEY} \
                     --header 'Content-Type: application/json' \
-                      --data-raw $body > result.txt
+                      --data-raw "$body" > result.txt
 
                 cat result.txt
                 if [ $(head -1 result.txt | grep -c '"success":false') -ne 0 ]; then
