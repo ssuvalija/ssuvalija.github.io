@@ -71,7 +71,7 @@ jobs:
               index=${#file_name_parsed[@]}-1
               name=${file_name_parsed[$index]}
               echo "FILE NAME========"
-              echo $name
+              name="$name"
               scriptBased=true
               enabled=true
               isGitHubSync=true
