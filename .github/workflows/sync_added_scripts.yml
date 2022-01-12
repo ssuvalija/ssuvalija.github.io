@@ -25,6 +25,9 @@ jobs:
           SC_API_KEY: ${{ secrets.SC_API_KEY }}
         run: |
 
+          echo "CHANGED and RENAMED FILES"
+          echo $steps.changed-files.outputs.added_file
+          echo $steps.changed-files.outputs.renamed_files 
           filesArray=()
           for file in "${{ steps.changed-files.outputs.added_files }}"; do 
             filesArray+=($file)
