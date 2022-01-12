@@ -29,13 +29,13 @@ jobs:
           for file in "${{ steps.changed-files.outputs.added_files }}"; do
             echo 'file was changed' 
             echo $file
-            filesArray+=("$file")
+            filesArray+=$(printf %q "$file")
           done
 
           for file in "${{ steps.changed-files.outputs.renamed_files }}"; do 
             echo 'file was changed' 
             echo $file
-            filesArray+=("$file")
+            filesArray+=$(printf %q "$file")
           done
 
           errors=()
