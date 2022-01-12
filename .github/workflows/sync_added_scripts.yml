@@ -70,6 +70,8 @@ jobs:
               IFS='/' read -r -a file_name_parsed <<< "$file"
               index=${#file_name_parsed[@]}-1
               name=${file_name_parsed[$index]}
+              echo "FILE NAME========"
+              echo $name
               scriptBased=true
               enabled=true
               isGitHubSync=true
