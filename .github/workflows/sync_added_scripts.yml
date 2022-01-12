@@ -27,15 +27,11 @@ jobs:
 
           filesArray=()
           for file in "${{ steps.changed-files.outputs.added_files }}"; do
-            echo 'file was changed' 
-            echo $file
-            filesArray+=$(printf %q "$file")
+            filesArray+=("$file")
           done
 
           for file in "${{ steps.changed-files.outputs.renamed_files }}"; do 
-            echo 'file was changed' 
-            echo $file
-            filesArray+=$(printf %q "$file")
+            filesArray+=("$file")
           done
 
           errors=()
@@ -51,7 +47,7 @@ jobs:
           for file in "${filesArray[@]}"; do
             if [[ $file == *"browser_monitor_scripts"* ]]; then
               echo $file
-              script_content=$( base64 -w 0 $file )
+              script_content=$( base64 -w 0 "$file" )
 
               #get app ID 
               line=$( head -n 1 $file )
