@@ -70,15 +70,12 @@ jobs:
               IFS='/' read -r -a file_name_parsed <<< "$file"
               index=${#file_name_parsed[@]}-1
               name=${file_name_parsed[$index]}
-              name="$name"
               scriptBased=true
               enabled=true
               isGitHubSync=true
               #TODO replace location id, for prod it should be 1 instead of 3
               body='{"name":"'$name'","interval":"1h","locations":[3],"scriptBased":'$scriptBased',"enabled":'$enabled',"script":"'$script_content'","isGitHubSync":'$isGitHubSync'}'
 
-              echo "BODY========"
-              echo $body
               api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/'${app_id}'/monitors/browser'
 
                 curl --location --request POST ${api_url} \
@@ -105,7 +102,7 @@ jobs:
       - name: Commit files # commit updated scripts with comment //app_id=x;monitor_id=y
         run: |
           # if [ "$SKIP_COMMIT" == "false" ]; then
-            git config --local user.name "SC-sync-scripts-bot"
+            git config --local user.name "Sematext-sync-scripts-bot"
             git add ./browser_monitor_scripts
             git commit -m "Updating scripts"
         #  fi
