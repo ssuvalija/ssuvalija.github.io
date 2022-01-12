@@ -26,11 +26,12 @@ jobs:
           SC_API_BASE_URL: ${{ secrets.SC_API_BASE_URL }}
           SC_API_KEY: ${{ secrets.SC_API_KEY }}
         run: |
+          filesArray=()
+
           for file in "${{ steps.changed-files.outputs.modified_files }}"; do
-            export SCRIPT_FILES="$file"
+            filesArray+=("$file")
           done
 
-          filesArray=($SCRIPT_FILES)
           errors=()
 
           echo 'Files to be synced:'
