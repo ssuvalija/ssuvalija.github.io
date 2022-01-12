@@ -90,7 +90,6 @@ jobs:
                   break
                 else
                   #update file with app ID and monitor ID comment so it can be synced later when update occurs
-                  echo "{ \"foo\": 123, \"bar\": 456 }" | jq '.foo'
                   first_line=$( head -1 result.txt )
                   monitor_id=`echo $first_line | jq '.data.id'`
                   comment='\/\/appId='$app_id';monitorId='$monitor_id''
