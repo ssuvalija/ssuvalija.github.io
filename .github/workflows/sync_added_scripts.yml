@@ -70,7 +70,6 @@ jobs:
               IFS='/' read -r -a file_name_parsed <<< "$file"
               index=${#file_name_parsed[@]}-1
               name=${file_name_parsed[$index]}
-              echo "FILE NAME========"
               name="$name"
               scriptBased=true
               enabled=true
@@ -78,6 +77,8 @@ jobs:
               #TODO replace location id, for prod it should be 1 instead of 3
               body='{"name":"'$name'","interval":"1h","locations":[3],"scriptBased":'$scriptBased',"enabled":'$enabled',"script":"'$script_content'","isGitHubSync":'$isGitHubSync'}'
 
+              echo "BODY========"
+              echo $body
               api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/'${app_id}'/monitors/browser'
 
                 curl --location --request POST ${api_url} \
