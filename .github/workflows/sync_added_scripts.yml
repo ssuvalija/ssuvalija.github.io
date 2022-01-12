@@ -50,13 +50,13 @@ jobs:
               script_content=$( base64 -w 0 "$file" )
 
               #get app ID 
-              line=$( head -n 1 $file )
+              line=$( head -n 1 "$file" )
               IFS='=' read -r -a app_id <<< "$line"
 
               length=${#app_id[@]}
               if [ $length != 2 ]; then
                   echo '::warning:: App ID must be specified on the first line using the format //appId=1'
-                  errors+=($file)
+                  errors+=("$file")
                   continue
               fi
 
@@ -86,14 +86,14 @@ jobs:
                 cat result.txt
                 if [ $(head -1 result.txt | grep -c '"success":false') -ne 0 ]; then
                   echo '::warning:: Sync script API request failed';
-                  errors+=($file)
+                  errors+=("$file")
                   break
                 else
                   #update file with app ID and monitor ID comment so it can be synced later when update occurs
                   first_line=$( head -1 result.txt )
                   monitor_id=`echo $first_line | jq '.data.id'`
                   comment='\/\/appId='$app_id';monitorId='$monitor_id''
-                  sed -i "1s/.*/$comment/" $file
+                  sed -i "1s/.*/$comment/" "$file"
 
                   export SKIP_COMMIT='false'
                 fi
