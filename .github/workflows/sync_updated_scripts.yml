@@ -36,18 +36,17 @@ jobs:
           echo 'Files to be synced:'
           for file in "${filesArray[@]}"; do
             if [[ $file == *"browser_monitor_scripts"* ]]; then
-              echo $file
-              script_content=$( base64 -w 0 $file )
+              script_content=$( base64 -w 0 "$file" )
               scriptBased=true
               body='{"scriptBased":'$scriptBased',"script":"'$script_content'"}'
 
-              line=$( head -n 1 $file )
+              line=$( head -n 1 "$file" )
               IFS=';' read -r -a ids <<< "$line"
 
               length=${#ids[@]}
               if [ $length != 2 ]; then
                   echo '::warning:: App ID and monitor IDs must be specified on the first line using the format //appId=1;monitorId=2,3'
-                  errors+=($file)
+                  errors+=("$file")
                   continue
               fi
 
@@ -56,7 +55,7 @@ jobs:
               app_id_length=${#app_id[@]}
               if [ $app_id_length != 2 ]; then
                   echo '::warning:: App ID not found. App ID and monitor IDs must be specified on the first line using the format //appId=1;monitorId=2,3'
-                  errors+=($file)
+                  errors+=("$file")
                   continue
               fi
 
@@ -71,7 +70,7 @@ jobs:
               monitor_ids_length=${#monitor_ids[@]}
               if [ $monitor_ids_length != 2 ]; then
                   echo '::warning:: Monitor ID not found. App ID and monitor IDs must be specified on the first line using the format //appId=1;monitorId=2,3'
-                  errors+=($file)
+                  errors+=("$file")
                   continue
               fi
 
@@ -81,8 +80,6 @@ jobs:
                 #remove whitespaces from monitor id
                 monitor_id="$(echo -e "${monitor_id}" | tr -d '[[:space:]]')"
                 api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/'${app_id}'/monitors/browser/'${monitor_id}
-                echo "api URL+++++++++++"
-                echo $api_url
                 curl -s --location --request PUT ${api_url} \
                   --header 'authorization: apiKey '${SC_API_KEY} \
                     --header 'Content-Type: application/json' \
@@ -91,7 +88,7 @@ jobs:
                 cat result.txt
                 if [ $(head -1 result.txt | grep -c '"success":false') -ne 0 ]; then
                   echo '::warning:: Sync script API request failed';
-                  errors+=($file)
+                  errors+=("$file")
                   break
                 fi
 
