@@ -26,8 +26,8 @@ jobs:
         run: |
 
           echo "CHANGED and RENAMED FILES"
-          echo $steps.changed-files.outputs.added_file
-          echo $steps.changed-files.outputs.renamed_files 
+          echo ${steps.changed-files.outputs.added_file}
+          echo ${steps.changed-files.outputs.renamed_files} 
           filesArray=()
           for file in "${{ steps.changed-files.outputs.added_files }}"; do 
             filesArray+=($file)
