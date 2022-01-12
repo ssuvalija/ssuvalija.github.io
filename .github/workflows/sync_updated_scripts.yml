@@ -15,11 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 2 
+          fetch-depth: 0 
 
       - name: Detect changed files
         id: changed-files
-        uses: tj-actions/changed-files@v1.1.3
+        uses: tj-actions/changed-files@v13.1
 
       - name: Send changed scripts to Sematext Cloud
         env:
