@@ -31,17 +31,15 @@ jobs:
           filesArray=()
 
           for file in "${{ steps.changed-files.outputs.modified_files }}"; do
-            echo "file=========" 
-            echo $file
             filesArray+=($file)
-            echo "file array=========" 
-            echo $filesArray
           done
 
           errors=()
+          
 
           echo 'Files to be synced:'
-          for file in "${filesArray[@]}"; do
+          for i in $(echo "${!filesArray[@]}"); do
+            file=$(echo ${filesArray[$i]})
             echo $file
             if [[ $file == *"browser_monitor_scripts"* ]]; then
               script_content=$( base64 -w 0 "$file" )
