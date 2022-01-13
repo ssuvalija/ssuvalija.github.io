@@ -16,6 +16,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0 
+          since_last_remote_commit: 'true'
 
       - name: Detect changed files
         id: changed-files
