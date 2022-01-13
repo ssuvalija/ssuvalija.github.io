@@ -40,9 +40,10 @@ jobs:
 
           if [ $length == 0 ]; then
             echo 'No added files found.'
-            export SKIP_COMMIT=1
-            echo "::set-env name=SKIP_COMMIT::$SKIP_COMMIT"
           fi
+
+          export SKIP_COMMIT=1
+          echo "::set-env name=SKIP_COMMIT::$SKIP_COMMIT"
 
           echo 'Files to be synced:'
           for file in "${filesArray[@]}"; do
