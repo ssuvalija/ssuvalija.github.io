@@ -42,6 +42,7 @@ jobs:
               scriptBased=true
               body='{"scriptBased":'$scriptBased',"script":"'$script_content'"}'
 
+         #read the first line of the script and get app ID and monitor IDs
               line=$( head -n 1 "$file" )
               IFS=';' read -r -a ids <<< "$line"
 
@@ -77,7 +78,8 @@ jobs:
               fi
 
               IFS=',' read -r -a monitors <<< "$monitor_ids"
-
+              
+              #send update request to Sematext API for each monitor ID
               for monitor_id in "${monitors[@]}"; do
                 #remove whitespaces from monitor id
                 monitor_id="$(echo -e "${monitor_id}" | tr -d '[[:space:]]')"
