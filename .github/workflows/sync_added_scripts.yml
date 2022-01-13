@@ -29,11 +29,11 @@ jobs:
 
           filesArray=()
           for file in "${{ steps.changed-files.outputs.added_files }}"; do
-            filesArray+=("$file")
+            filesArray+=($file)
           done
 
           for file in "${{ steps.changed-files.outputs.renamed_files }}"; do 
-            filesArray+=("$file")
+            filesArray+=($file)
           done
 
           errors=()
