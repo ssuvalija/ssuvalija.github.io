@@ -31,6 +31,10 @@ jobs:
           filesArray=()
 
           for file in "${{ steps.changed-files.outputs.modified_files }}"; do
+            echo "--------"
+            echo "CHANGED FILE"
+            echo $file
+            echo "--------"
             filesArray+=("$file")
           done
 
