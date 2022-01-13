@@ -29,19 +29,10 @@ jobs:
           SC_API_BASE_URL: ${{ secrets.SC_API_BASE_URL }}
           SC_API_KEY: ${{ secrets.SC_API_KEY }}
         run: |
-          filesArray=()
-
-          for file in "${{ steps.changed-files.outputs.modified_files }}"; do
-            echo "--------"
-            echo "CHANGED FILE"
-            echo $file
-            echo "--------"
-            filesArray+=("$file")
-          done
+          IFS=';' read -r -a filesArray <<< "${{ steps.changed-files.outputs.modified_files }}"
 
           errors=()
           
-
           echo 'Files to be synced:'
           for i in $(echo "${!filesArray[@]}"); do
             file=$(echo ${filesArray[$i]})
