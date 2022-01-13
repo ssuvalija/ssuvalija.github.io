@@ -20,6 +20,7 @@ jobs:
         uses: tj-actions/changed-files@v13.1
         with:
           since_last_remote_commit: 'true'
+          separator: ","
 
       - name: Send newly created scripts to Sematext Cloud (Action will create Browser monitor for each added script)
         env:
@@ -27,14 +28,10 @@ jobs:
           SC_API_KEY: ${{ secrets.SC_API_KEY }}
         run: |
 
-          filesArray=()
-          for file in "${{ steps.changed-files.outputs.added_files }}"; do
-            filesArray+=($file)
-          done
-
-          for file in "${{ steps.changed-files.outputs.renamed_files }}"; do 
-            filesArray+=($file)
-          done
+          IFS=',' read -r -a addedFiles <<< "${{ steps.changed-files.outputs.added_files }}"
+          IFS=',' read -r -a renamedFiles <<< "${{ steps.changed-files.outputs.renamed_files }}"
+          
+          filesArray=("${addedFiles[@]}" "${renamedFiles[@]}")
 
           errors=()
 
@@ -47,7 +44,9 @@ jobs:
           echo "SKIP_COMMIT=1" >> $GITHUB_ENV
 
           echo 'Files to be synced:'
-          for file in "${filesArray[@]}"; do
+          for i in $(echo "${!filesArray[@]}"); do
+            file=$(echo ${filesArray[$i]})
+            echo $file
             if [[ $file == *"browser_monitor_scripts"* ]]; then
               script_content=$( base64 -w 0 "$file" )
 
