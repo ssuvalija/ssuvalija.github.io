@@ -42,8 +42,7 @@ jobs:
             echo 'No added files found.'
           fi
 
-          export SKIP_COMMIT=1
-          echo "::set-env name=SKIP_COMMIT::$SKIP_COMMIT"
+          echo "SKIP_COMMIT=1" >> $GITHUB_ENV
 
           echo 'Files to be synced:'
           for file in "${filesArray[@]}"; do
@@ -96,8 +95,7 @@ jobs:
                   comment='\/\/appId='$app_id';monitorId='$monitor_id''
                   sed -i "1s/.*/$comment/" "$file"
 
-                  export SKIP_COMMIT=0
-                  echo "::set-env name=SKIP_COMMIT::$SKIP_COMMIT"
+                  echo "SKIP_COMMIT=0" >> $GITHUB_ENV
                 fi
             fi
           done
