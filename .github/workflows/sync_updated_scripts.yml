@@ -22,6 +22,7 @@ jobs:
         uses: tj-actions/changed-files@v13.1
         with:
           since_last_remote_commit: 'true'
+          separator: ","
 
       - name: Send changed scripts to Sematext Cloud
         env:
