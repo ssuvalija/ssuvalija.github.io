@@ -101,8 +101,6 @@ jobs:
           done
       - name: Commit files # commit updated scripts with comment //app_id=x;monitor_id=y
         run: |
-          echo "skip commit=========="
-          echo $SKIP_COMMIT
           if [ $SKIP_COMMIT -eq 0 ]; then
             git config --local user.name "Sematext-sync-scripts-bot"
             git add ./browser_monitor_scripts
