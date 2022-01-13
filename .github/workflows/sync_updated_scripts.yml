@@ -31,7 +31,7 @@ jobs:
           filesArray=()
 
           for file in "${{ steps.changed-files.outputs.modified_files }}"; do
-            filesArray+=($file)
+            filesArray+=("$file")
           done
 
           errors=()
