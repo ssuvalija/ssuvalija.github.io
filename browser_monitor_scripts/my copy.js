@@ -1,4 +1,4 @@
-//appId=11557
+//appId=11557;monitorId=2640
 async function testPage(page) {
   // Replace YOUR_WEBPAGE_URL with URL of the webpage to be monitored
   //update
