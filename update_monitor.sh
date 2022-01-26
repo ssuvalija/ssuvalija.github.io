@@ -4,6 +4,8 @@ file='test-script.js'
 
 # (echo "#monitorId=67667868" && cat 'test-script.js') > filename1 && mv filename1 'test-script.js'
 
+
+
 # errors=()
 # not_synced=""
 # line=$( head -n 1 $file )
