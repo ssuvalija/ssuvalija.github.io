@@ -96,7 +96,7 @@ jobs:
                 fi
             fi
           done
-          
+
           if (( ${#errors[@]} )); then
             echo '::warning:: Following scripts are not synced, please check workflow logs for more details:'
             for error in "${errors[@]}"; do
@@ -113,8 +113,3 @@ jobs:
             git commit -m "Updating scripts"
             git push
           fi
-      # - name: Push changes 
-      #   uses: ad-m/github-push-action@master
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     force: true
