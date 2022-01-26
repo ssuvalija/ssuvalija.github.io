@@ -105,9 +105,10 @@ jobs:
             git config --local user.name "Sematext-sync-scripts-bot"
             git add ./browser_monitor_scripts
             git commit -m "Updating scripts"
+            git push
           fi
-      - name: Push changes 
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          force: true
+      # - name: Push changes 
+      #   uses: ad-m/github-push-action@master
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     force: true
