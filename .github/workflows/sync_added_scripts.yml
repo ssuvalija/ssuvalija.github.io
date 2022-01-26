@@ -96,6 +96,15 @@ jobs:
                 fi
             fi
           done
+          
+          if (( ${#errors[@]} )); then
+            echo '::warning:: Following scripts are not synced, please check workflow logs for more details:'
+            for error in "${errors[@]}"; do
+              echo '    file name: '$error
+            done
+            exit 1
+          fi
+
       - name: Commit files # commit updated scripts with comment //app_id=x;monitor_id=y
         run: |
           if [ $SKIP_COMMIT -eq 0 ]; then
