@@ -1,6 +1,10 @@
 #!/bin/bash
 
-file='test-script.js'
+file='my.js'
+
+test=$( head -1 'my.js' )
+echo "TEST======"
+echo $test
 
 # (echo "#monitorId=67667868" && cat 'test-script.js') > filename1 && mv filename1 'test-script.js'
 
@@ -38,8 +42,11 @@ file='test-script.js'
 # fi
 
 
-script_content=$( base64 $file)
+script_content=$( base64 $file )
 
+
+echo "SCRIPT CONTENT======+++++++++"
+echo $script_content
 api_url='https://apps.test.sematext.com'
 api_url+='/synthetics-api/api/v3/apps/3981/monitors/browser'
 
@@ -70,21 +77,28 @@ VARIABLE_NAME='  aaa  bbb  '
 
 echo "name======"$name
 
-
-echo "{\"success\":true,\"data\":{\"id\":1204,\"name\":\"new_script_4.js" | sed -e 's/.*id":\(.*\),.*/\1/'
+firts_line=$( head -1 results.txt )
+echo "$firts_line"
+monitorId=`echo $firts_line | jq '.data.id'`
+#monitorId=`echo "{\"success\":true,\"data\":{\"id\":1204,\"name\":\"new_script_4.js\"}" } | sed -e 's/.*id":\(.*\),.*/\1/'`
+echo $monitorId
+#echo "{\"success\":true,\"data\":{\"id\":1204,\"name\":\"new_script_4.js" | sed -e 's/.*id":\(.*\),.*/\1/'
 # name=$file
 # scriptBased=true
 # enabled=true
 # locations=()
 # locations+=1
-# body='{"name":"'$name'","interval":"1h","locations":[3],"scriptBased":'$scriptBased',"enabled":'$enabled',"script":"'$script_content'"}'
-
+#body='{"name":"new script testing","interval":"1h","locations":[3],"scriptBased":'$scriptBased',"enabled":'$enabled',"script":"'$script_content'"}'
+body='{"name":"my_new_test copy.js","interval":"1h","locations":[3],"scriptBased":true,"enabled":true,"script":"test"}'
 # cho "request body======"$body
 
-# curl --location --request POST $api_url \
-# --header 'Authorization: apiKey 55d4a7c1-4d9f-44e5-be42-1a5e42be62bc' \
-# --header 'Content-Type: application/json' \
-# --data-raw $body > result.txt
+body3='{"name":"Test Browser 3","interval":"10m","enabled":true,"locations":[3],"script":"// This script loads the webpage and takes a screenshot of the loaded page.\nasync function testPage(page) {\n  // Replace YOUR_WEBPAGE_URL with URL of the webpage to be monitored\n  await page.goto(\"https://status.slack.com/2021-12/a17eae991fdc437d\");\n  await page.screenshot({ path: '\''screenshot.jpg'\'' });\n}\nmodule.exports = testPage;\\\n","scriptBased":true}'
+curl --location --request POST $api_url \
+--header 'Authorization: apiKey 55d4a7c1-4d9f-44e5-be42-1a5e42be62bc' \
+--header 'Content-Type: application/json' \
+--data-raw "$body3"
+
+#--data-raw $body > result.txt
 
 # cat result.txt
 
@@ -97,3 +111,15 @@ echo "{\"success\":true,\"data\":{\"id\":1204,\"name\":\"new_script_4.js" | sed 
 #     "script": "\/\/ This script loads the webpage and takes a screenshot of the loaded page.\r\nasync function testPage(page) {\r\n  \/\/ Replace YOUR_WEBPAGE_URL with URL of the webpage to be monitored\r\n  await page.goto(\"https:\/\/ssuvalija.github.io\/index.html#\");\r\n  await page.goto(\"https:\/\/ssuvalija.github.io\/elements.html\");\r\n  \r\n  await page.screenshot({ path: '\''screenshot.jpg'\'' });\r\n}\r\nmodule.exports = testPage;",
 #     "scriptBased": true
 # }'
+
+
+array_test[0]='hello world'
+array_test[1]='sunny'
+
+for elem in ${array_test[@]}; do
+  echo $elem
+done
+
+for i in $(echo ${!array_test[@]}); do
+  echo ${array_test[$i]}
+done
