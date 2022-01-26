@@ -8,6 +8,8 @@ echo $test
 
 # (echo "#monitorId=67667868" && cat 'test-script.js') > filename1 && mv filename1 'test-script.js'
 
+
+
 # errors=()
 # not_synced=""
 # line=$( head -n 1 $file )
@@ -111,7 +113,6 @@ curl --location --request POST $api_url \
 #     "script": "\/\/ This script loads the webpage and takes a screenshot of the loaded page.\r\nasync function testPage(page) {\r\n  \/\/ Replace YOUR_WEBPAGE_URL with URL of the webpage to be monitored\r\n  await page.goto(\"https:\/\/ssuvalija.github.io\/index.html#\");\r\n  await page.goto(\"https:\/\/ssuvalija.github.io\/elements.html\");\r\n  \r\n  await page.screenshot({ path: '\''screenshot.jpg'\'' });\r\n}\r\nmodule.exports = testPage;",
 #     "scriptBased": true
 # }'
-
 
 array_test[0]='hello world'
 array_test[1]='sunny'
