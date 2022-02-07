@@ -47,53 +47,75 @@ jobs:
             if [[ $file == *"browser_monitor_scripts"* ]]; then
               script_content=$( base64 -w 0 "$file" )
 
-              #get app ID 
-              line=$( head -n 1 "$file" )
-              IFS='=' read -r -a app_id <<< "$line"
 
-              length=${#app_id[@]}
-              if [ $length != 2 ]; then
+              #read the first line of the script and get app ID and monitor IDs
+              line=$( head -n 1 "$file" )
+              IFS=';' read -r -a ids <<< "$line"
+
+              length=${#ids[@]}
+
+              if [ $length == 0 ]; then
+                  echo '::warning:: App ID must be specified on the first line using the format //appId=1; '
+                  errors+=("$file")
+                  continue
+              fi
+
+              #if only APP ID is passed, create new browser monitor
+              if [ $length == 1 ]; then
+
+                IFS='=' read -r -a app_id <<< "${ids[0]}"
+                app_id_length=${#app_id[@]}
+                
+                if [ $app_id_length != 2 ]; then
+                    echo '::warning:: App ID not found. App ID must be specified on the first line using the format //appId=1; or alternatively if you are adding script for existing monitor you have to specify monitor ID as well in format //appId=1;monitorId=2,3'
+                    errors+=("$file")
+                    continue
+                fi
+                app_id=${app_id[1]}
+
+                #remove whitespaces
+                app_id="$(echo -e "${app_id}" | tr -d '[[:space:]]')"
+
+                #create request body with default values
+
+                IFS='/' read -r -a file_name_parsed <<< "$file"
+                index=${#file_name_parsed[@]}-1
+                name=${file_name_parsed[$index]}
+                scriptBased=true
+                enabled=true
+                isGitHubSync=true
+                body='{"name":"'$name'","interval":"1h","locations":[1],"scriptBased":'$scriptBased',"enabled":'$enabled',"script":"'$script_content'","isGitHubSync":'$isGitHubSync'}'
+
+                api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/'${app_id}'/monitors/browser'
+
+                  curl --location --request POST ${api_url} \
+                    --header 'authorization: apiKey '${SC_API_KEY} \
+                      --header 'Content-Type: application/json' \
+                        --data-raw "$body" > result.txt
+
+                  cat result.txt
+                  if [ $(head -1 result.txt | grep -c '"success":false') -ne 0 ]; then
+                    echo '::warning:: Sync script API request failed';
+                    errors+=("$file")
+                    break
+                  else
+                    #update file with app ID and monitor ID comment so it can be synced later when update occurs
+                    first_line=$( head -1 result.txt )
+                    monitor_id=`echo $first_line | jq '.data.id'`
+                    comment='\/\/appId='$app_id';monitorId='$monitor_id''
+                    sed -i "1s/.*/$comment/" "$file"
+
+                    echo "SKIP_COMMIT=0" >> $GITHUB_ENV
+                  fi
+              fi
+
+              if [ $length == 2 ]; then
                   echo '::warning:: App ID must be specified on the first line using the format //appId=1'
                   errors+=("$file")
                   continue
               fi
 
-              app_id=${app_id[1]}
-
-              #remove whitespaces
-              app_id="$(echo -e "${app_id}" | tr -d '[[:space:]]')"
-
-              #create request body with default values
-
-              IFS='/' read -r -a file_name_parsed <<< "$file"
-              index=${#file_name_parsed[@]}-1
-              name=${file_name_parsed[$index]}
-              scriptBased=true
-              enabled=true
-              isGitHubSync=true
-              body='{"name":"'$name'","interval":"1h","locations":[1],"scriptBased":'$scriptBased',"enabled":'$enabled',"script":"'$script_content'","isGitHubSync":'$isGitHubSync'}'
-
-              api_url=${SC_API_BASE_URL}'/synthetics-api/api/v3/apps/'${app_id}'/monitors/browser'
-
-                curl --location --request POST ${api_url} \
-                  --header 'authorization: apiKey '${SC_API_KEY} \
-                    --header 'Content-Type: application/json' \
-                      --data-raw "$body" > result.txt
-
-                cat result.txt
-                if [ $(head -1 result.txt | grep -c '"success":false') -ne 0 ]; then
-                  echo '::warning:: Sync script API request failed';
-                  errors+=("$file")
-                  break
-                else
-                  #update file with app ID and monitor ID comment so it can be synced later when update occurs
-                  first_line=$( head -1 result.txt )
-                  monitor_id=`echo $first_line | jq '.data.id'`
-                  comment='\/\/appId='$app_id';monitorId='$monitor_id''
-                  sed -i "1s/.*/$comment/" "$file"
-
-                  echo "SKIP_COMMIT=0" >> $GITHUB_ENV
-                fi
+             
             fi
           done
 
